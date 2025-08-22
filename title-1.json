@@ -1,0 +1,2025 @@
+[
+{
+  "id": "title1-1",
+  "group": "title1",
+  "header": "부수의 위치에 따른 명칭",
+  "hanja": "상, 하, 좌, 우\n좌하단, 좌상단,\n테두리, 제부수",
+  "meaning": "머리, 발, 변, 방,\n받침, 엄,\n몸, 제부수",
+  "notes": ""
+},
+{
+  "id": "title1-2",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "一",
+  "meaning": "한",
+  "sound": "일",
+  "notes": ""
+},
+{
+  "id": "title1-3",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "丨",
+  "meaning": "뚫을",
+  "sound": "곤",
+  "notes": ""
+},
+{
+  "id": "title1-4",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "丶",
+  "meaning": "점",
+  "sound": "주",
+  "notes": ""
+},
+{
+  "id": "title1-5",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "丿",
+  "meaning": "삐침",
+  "sound": "별",
+  "notes": ""
+},
+{
+  "id": "title1-6",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "乙",
+  "meaning": "새",
+  "sound": "을",
+  "notes": ""
+},
+{
+  "id": "title1-7",
+  "group": "title1",
+  "header": "1획 부수(002~007)",
+  "hanja": "亅",
+  "meaning": "갈고리",
+  "sound": "궐",
+  "notes": ""
+},
+{
+  "id": "title1-8",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "二",
+  "meaning": "두",
+  "sound": "이",
+  "notes": ""
+},
+{
+  "id": "title1-9",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "亠",
+  "meaning": "돼지해머리",
+  "notes": ""
+},
+{
+  "id": "title1-10",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "人(亻)",
+  "meaning": "사람",
+  "sound": "인(변)",
+  "notes": ""
+},
+{
+  "id": "title1-11",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "儿",
+  "meaning": "어진사람인발",
+  "notes": ""
+},
+{
+  "id": "title1-12",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "入",
+  "meaning": "들",
+  "sound": "입",
+  "notes": ""
+},
+{
+  "id": "title1-13",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "八",
+  "meaning": "여덟",
+  "sound": "팔",
+  "notes": ""
+},
+{
+  "id": "title1-14",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "冂",
+  "meaning": "멀경몸",
+  "notes": ""
+},
+{
+  "id": "title1-15",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "冖",
+  "meaning": "민갓머리",
+  "notes": ""
+},
+{
+  "id": "title1-16",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "冫",
+  "meaning": "이수변(얼음 빙)",
+  "notes": ""
+},
+{
+  "id": "title1-17",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "几",
+  "meaning": "안석",
+  "sound": "궤",
+  "notes": ""
+},
+{
+  "id": "title1-18",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "凵",
+  "meaning": "위튼입구몸",
+  "notes": ""
+},
+{
+  "id": "title1-19",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "刀(刂)",
+  "meaning": "칼",
+  "sound": "도(방)",
+  "notes": ""
+},
+{
+  "id": "title1-20",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "力",
+  "meaning": "힘",
+  "sound": "력",
+  "notes": ""
+},
+{
+  "id": "title1-21",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "勹",
+  "meaning": "쌀포몸",
+  "notes": ""
+},
+{
+  "id": "title1-22",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "匕",
+  "meaning": "비수",
+  "sound": "비",
+  "notes": ""
+},
+{
+  "id": "title1-23",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "匚",
+  "meaning": "터진입구몸",
+  "notes": ""
+},
+{
+  "id": "title1-24",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "匸",
+  "meaning": "감출혜몸",
+  "notes": ""
+},
+{
+  "id": "title1-25",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "十",
+  "meaning": "열",
+  "sound": "십",
+  "notes": ""
+},
+{
+  "id": "title1-26",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "卜",
+  "meaning": "점",
+  "sound": "복",
+  "notes": ""
+},
+{
+  "id": "title1-27",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "卩(㔾)",
+  "meaning": "병부절",
+  "notes": ""
+},
+{
+  "id": "title1-28",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "厂",
+  "meaning": "민엄호",
+  "notes": ""
+},
+{
+  "id": "title1-29",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "厶",
+  "meaning": "마늘",
+  "sound": "모",
+  "notes": ""
+},
+{
+  "id": "title1-30",
+  "group": "title1",
+  "header": "2획 부수(008~030)",
+  "hanja": "又",
+  "meaning": "또",
+  "sound": "우",
+  "notes": ""
+},
+{
+  "id": "title1-31",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "口",
+  "meaning": "입",
+  "sound": "구",
+  "notes": ""
+},
+{
+  "id": "title1-32",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "囗",
+  "meaning": "큰입구몸",
+  "notes": ""
+},
+{
+  "id": "title1-33",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "土",
+  "meaning": "흙",
+  "sound": "토",
+  "notes": ""
+},
+{
+  "id": "title1-34",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "士",
+  "meaning": "선비",
+  "sound": "사",
+  "notes": ""
+},
+{
+  "id": "title1-35",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "夂",
+  "meaning": "뒤져올",
+  "sound": "치",
+  "notes": ""
+},
+{
+  "id": "title1-36",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "夊",
+  "meaning": "천천히걸을쇠발",
+  "notes": ""
+},
+{
+  "id": "title1-37",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "夕",
+  "meaning": "저녁",
+  "sound": "석",
+  "notes": ""
+},
+{
+  "id": "title1-38",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "大",
+  "meaning": "큰",
+  "sound": "대",
+  "notes": ""
+},
+{
+  "id": "title1-39",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "女",
+  "meaning": "계집",
+  "sound": "녀",
+  "notes": ""
+},
+{
+  "id": "title1-40",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "子",
+  "meaning": "아들",
+  "sound": "자",
+  "notes": ""
+},
+{
+  "id": "title1-41",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "宀",
+  "meaning": "갓머리",
+  "notes": ""
+},
+{
+  "id": "title1-42",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "寸",
+  "meaning": "마디",
+  "sound": "촌",
+  "notes": ""
+},
+{
+  "id": "title1-43",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "小",
+  "meaning": "작을",
+  "sound": "소",
+  "notes": ""
+},
+{
+  "id": "title1-44",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "尢",
+  "meaning": "절름발이",
+  "sound": "왕",
+  "notes": ""
+},
+{
+  "id": "title1-45",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "尸",
+  "meaning": "주검시엄",
+  "notes": ""
+},
+{
+  "id": "title1-46",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "屮",
+  "meaning": "왼손",
+  "sound": "좌",
+  "notes": ""
+},
+{
+  "id": "title1-47",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "山",
+  "meaning": "메",
+  "sound": "산",
+  "notes": ""
+},
+{
+  "id": "title1-48",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "巛(川)",
+  "meaning": "개미허리(내",
+  "sound": "천)",
+  "notes": ""
+},
+{
+  "id": "title1-49",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "工",
+  "meaning": "장인",
+  "sound": "공",
+  "notes": ""
+},
+{
+  "id": "title1-50",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "己",
+  "meaning": "몸",
+  "sound": "기",
+  "notes": ""
+},
+{
+  "id": "title1-51",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "巾",
+  "meaning": "수건",
+  "sound": "건",
+  "notes": ""
+},
+{
+  "id": "title1-52",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "干",
+  "meaning": "방패",
+  "sound": "간",
+  "notes": ""
+},
+{
+  "id": "title1-53",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "幺",
+  "meaning": "작을",
+  "sound": "요",
+  "notes": ""
+},
+{
+  "id": "title1-54",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "广",
+  "meaning": "엄호",
+  "notes": ""
+},
+{
+  "id": "title1-55",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "廴",
+  "meaning": "민책받침",
+  "notes": ""
+},
+{
+  "id": "title1-56",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "廾",
+  "meaning": "스물입발",
+  "notes": ""
+},
+{
+  "id": "title1-57",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "弋",
+  "meaning": "주살",
+  "sound": "익",
+  "notes": ""
+},
+{
+  "id": "title1-58",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "弓",
+  "meaning": "활",
+  "sound": "궁",
+  "notes": ""
+},
+{
+  "id": "title1-59",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "彑(彐)",
+  "meaning": "튼가로왈",
+  "notes": ""
+},
+{
+  "id": "title1-60",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "彡",
+  "meaning": "터럭",
+  "sound": "삼",
+  "notes": ""
+},
+{
+  "id": "title1-61",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "彳",
+  "meaning": "두인변",
+  "notes": ""
+},
+{
+  "id": "title1-62",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "忄",
+  "meaning": "심방변",
+  "notes": ""
+},
+{
+  "id": "title1-63",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "",
+  "sound": "氵",
+  "meaning": "삼수변",
+  "notes": ""
+},
+{
+  "id": "title1-64",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "犭",
+  "meaning": "개사슴록변",
+  "notes": ""
+},
+{
+  "id": "title1-65",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "阝",
+  "meaning": "우부방",
+  "notes": ""
+},
+{
+  "id": "title1-66",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "阝",
+  "meaning": "좌부변",
+  "notes": ""
+},
+{
+  "id": "title1-67",
+  "group": "title1",
+  "header": "3획 부수(031~067)",
+  "hanja": "扌",
+  "meaning": "재방변",
+  "notes": ""
+},
+{
+  "id": "title1-68",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "心(⺗)",
+  "meaning": "마음",
+  "sound": "심(발)",
+  "notes": ""
+},
+{
+  "id": "title1-69",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "戈",
+  "meaning": "창",
+  "sound": "과",
+  "notes": ""
+},
+{
+  "id": "title1-70",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "戶",
+  "meaning": "지게",
+  "sound": "호",
+  "notes": ""
+},
+{
+  "id": "title1-71",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "手",
+  "meaning": "손",
+  "sound": "수",
+  "notes": ""
+},
+{
+  "id": "title1-72",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "支",
+  "meaning": "지탱할",
+  "sound": "지",
+  "notes": ""
+},
+{
+  "id": "title1-73",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "攵(攴)",
+  "meaning": "등글월문(칠",
+  "sound": "복)",
+  "notes": ""
+},
+{
+  "id": "title1-74",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "文",
+  "meaning": "글월",
+  "sound": "문",
+  "notes": ""
+},
+{
+  "id": "title1-75",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "斗",
+  "meaning": "말",
+  "sound": "두",
+  "notes": ""
+},
+{
+  "id": "title1-76",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "斤",
+  "meaning": "도끼",
+  "sound": "근",
+  "notes": ""
+},
+{
+  "id": "title1-77",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "方",
+  "meaning": "모",
+  "sound": "방",
+  "notes": ""
+},
+{
+  "id": "title1-78",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "无(旡)",
+  "meaning": "이미기방",
+  "notes": ""
+},
+{
+  "id": "title1-79",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "日",
+  "meaning": "날",
+  "sound": "일",
+  "notes": ""
+},
+{
+  "id": "title1-80",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "曰",
+  "meaning": "가로",
+  "sound": "왈",
+  "notes": ""
+},
+{
+  "id": "title1-81",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "月",
+  "meaning": "달",
+  "sound": "월, 육달월",
+  "notes": ""
+},
+{
+  "id": "title1-82",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "木",
+  "meaning": "나무",
+  "sound": "목",
+  "notes": ""
+},
+{
+  "id": "title1-83",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "欠",
+  "meaning": "하품",
+  "sound": "흠",
+  "notes": ""
+},
+{
+  "id": "title1-84",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "止",
+  "meaning": "그칠",
+  "sound": "지",
+  "notes": ""
+},
+{
+  "id": "title1-85",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "歹(歺)",
+  "meaning": "죽을사변",
+  "notes": ""
+},
+{
+  "id": "title1-86",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "殳",
+  "meaning": "갖을등글월문",
+  "notes": ""
+},
+{
+  "id": "title1-87",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "毋",
+  "meaning": "말",
+  "sound": "무",
+  "notes": ""
+},
+{
+  "id": "title1-88",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "比",
+  "meaning": "견줄",
+  "sound": "비",
+  "notes": ""
+},
+{
+  "id": "title1-89",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "毛",
+  "meaning": "터럭",
+  "sound": "모",
+  "notes": ""
+},
+{
+  "id": "title1-90",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "氏",
+  "meaning": "성씨",
+  "sound": "씨",
+  "notes": ""
+},
+{
+  "id": "title1-91",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "气",
+  "meaning": "기운기엄",
+  "notes": ""
+},
+{
+  "id": "title1-92",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "水",
+  "meaning": "물",
+  "sound": "수",
+  "notes": ""
+},
+{
+  "id": "title1-93",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "火(灬)",
+  "meaning": "불",
+  "sound": "화(연화발)",
+  "notes": ""
+},
+{
+  "id": "title1-94",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "爪(爫)",
+  "meaning": "손톱",
+  "sound": "조",
+  "notes": ""
+},
+{
+  "id": "title1-95",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "父",
+  "meaning": "아비",
+  "sound": "부",
+  "notes": ""
+},
+{
+  "id": "title1-96",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "爻",
+  "meaning": "점괘",
+  "sound": "효",
+  "notes": ""
+},
+{
+  "id": "title1-97",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "爿",
+  "meaning": "장수장변",
+  "notes": ""
+},
+{
+  "id": "title1-98",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "片",
+  "meaning": "조각",
+  "sound": "편",
+  "notes": ""
+},
+{
+  "id": "title1-99",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "牙",
+  "meaning": "어금니",
+  "sound": "아",
+  "notes": ""
+},
+{
+  "id": "title1-100",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "牛(牜)",
+  "meaning": "소",
+  "sound": "우",
+  "notes": ""
+},
+{
+  "id": "title1-101",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "犬",
+  "meaning": "개",
+  "sound": "견",
+  "notes": ""
+},
+{
+  "id": "title1-102",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "⺩",
+  "meaning": "구슬옥변",
+  "notes": ""
+},
+{
+  "id": "title1-103",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "⺭",
+  "meaning": "보일시변",
+  "notes": ""
+},
+{
+  "id": "title1-104",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "耂",
+  "meaning": "늙을로엄",
+  "notes": ""
+},
+{
+  "id": "title1-105",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "艹",
+  "meaning": "초두머리",
+  "notes": ""
+},
+{
+  "id": "title1-106",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "辶",
+  "meaning": "책받침",
+  "notes": ""
+},
+{
+  "id": "title1-107",
+  "group": "title1",
+  "header": "4획 부수(068~107)",
+  "hanja": "⺳",
+  "meaning": "그물망",
+  "notes": ""
+},
+{
+  "id": "title1-108",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "玄",
+  "meaning": "검을",
+  "sound": "현",
+  "notes": ""
+},
+{
+  "id": "title1-109",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "玉",
+  "meaning": "구슬",
+  "sound": "옥",
+  "notes": ""
+},
+{
+  "id": "title1-110",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "瓜",
+  "meaning": "오이",
+  "sound": "과",
+  "notes": ""
+},
+{
+  "id": "title1-111",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "瓦",
+  "meaning": "기와",
+  "sound": "와",
+  "notes": ""
+},
+{
+  "id": "title1-112",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "甘",
+  "meaning": "달",
+  "sound": "감",
+  "notes": ""
+},
+{
+  "id": "title1-113",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "生",
+  "meaning": "날",
+  "sound": "생",
+  "notes": ""
+},
+{
+  "id": "title1-114",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "用",
+  "meaning": "쓸",
+  "sound": "용",
+  "notes": ""
+},
+{
+  "id": "title1-115",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "田",
+  "meaning": "밭",
+  "sound": "전",
+  "notes": ""
+},
+{
+  "id": "title1-116",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "疋",
+  "meaning": "짝",
+  "sound": "필",
+  "notes": ""
+},
+{
+  "id": "title1-117",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "疒",
+  "meaning": "병질엄",
+  "notes": ""
+},
+{
+  "id": "title1-118",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "癶",
+  "meaning": "필발머리",
+  "notes": ""
+},
+{
+  "id": "title1-119",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "白",
+  "meaning": "흰",
+  "sound": "백",
+  "notes": ""
+},
+{
+  "id": "title1-120",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "皮",
+  "meaning": "가죽",
+  "sound": "피",
+  "notes": ""
+},
+{
+  "id": "title1-121",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "皿",
+  "meaning": "그릇",
+  "sound": "명",
+  "notes": ""
+},
+{
+  "id": "title1-122",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "目",
+  "meaning": "눈",
+  "sound": "목",
+  "notes": ""
+},
+{
+  "id": "title1-123",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "矛",
+  "meaning": "창",
+  "sound": "모",
+  "notes": ""
+},
+{
+  "id": "title1-124",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "矢",
+  "meaning": "화살",
+  "sound": "시",
+  "notes": ""
+},
+{
+  "id": "title1-125",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "石",
+  "meaning": "돌",
+  "sound": "석",
+  "notes": ""
+},
+{
+  "id": "title1-126",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "示",
+  "meaning": "보일",
+  "sound": "시",
+  "notes": ""
+},
+{
+  "id": "title1-127",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "禸",
+  "meaning": "발자국",
+  "sound": "유",
+  "notes": ""
+},
+{
+  "id": "title1-128",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "禾",
+  "meaning": "벼",
+  "sound": "화",
+  "notes": ""
+},
+{
+  "id": "title1-129",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "穴",
+  "meaning": "구멍",
+  "sound": "혈",
+  "notes": ""
+},
+{
+  "id": "title1-130",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "立",
+  "meaning": "설",
+  "sound": "립",
+  "notes": ""
+},
+{
+  "id": "title1-131",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "罒",
+  "meaning": "그물망머리",
+  "notes": ""
+},
+{
+  "id": "title1-132",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "",
+  "sound": "衤",
+  "meaning": "옷의변",
+  "notes": ""
+},
+{
+  "id": "title1-133",
+  "group": "title1",
+  "header": "5획 부수(108~133)",
+  "hanja": "氺",
+  "meaning": "아래물수",
+  "notes": ""
+},
+{
+  "id": "title1-134",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "竹",
+  "meaning": "대",
+  "sound": "죽",
+  "notes": ""
+},
+{
+  "id": "title1-135",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "米",
+  "meaning": "쌀",
+  "sound": "미",
+  "notes": ""
+},
+{
+  "id": "title1-136",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "糸",
+  "meaning": "실 사",
+  "notes": ""
+},
+{
+  "id": "title1-137",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "缶",
+  "meaning": "장군",
+  "sound": "부",
+  "notes": ""
+},
+{
+  "id": "title1-138",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "网",
+  "meaning": "그물",
+  "sound": "망",
+  "notes": ""
+},
+{
+  "id": "title1-139",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "羊",
+  "meaning": "양",
+  "sound": "양",
+  "notes": ""
+},
+{
+  "id": "title1-140",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "羽",
+  "meaning": "깃",
+  "sound": "우",
+  "notes": ""
+},
+{
+  "id": "title1-141",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "老",
+  "meaning": "늙을",
+  "sound": "로",
+  "notes": ""
+},
+{
+  "id": "title1-142",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "而",
+  "meaning": "말 이을",
+  "sound": "이",
+  "notes": ""
+},
+{
+  "id": "title1-143",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "耒",
+  "meaning": "가래",
+  "sound": "뢰",
+  "notes": ""
+},
+{
+  "id": "title1-144",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "耳",
+  "meaning": "귀",
+  "sound": "이",
+  "notes": ""
+},
+{
+  "id": "title1-145",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "聿",
+  "meaning": "붓",
+  "sound": "율",
+  "notes": ""
+},
+{
+  "id": "title1-146",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "肉",
+  "meaning": "고기",
+  "sound": "육",
+  "notes": ""
+},
+{
+  "id": "title1-147",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "臣",
+  "meaning": "신하",
+  "sound": "신",
+  "notes": ""
+},
+{
+  "id": "title1-148",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "自",
+  "meaning": "스스로",
+  "sound": "자",
+  "notes": ""
+},
+{
+  "id": "title1-149",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "至",
+  "meaning": "이를",
+  "sound": "지",
+  "notes": ""
+},
+{
+  "id": "title1-150",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "臼",
+  "meaning": "절구",
+  "sound": "구",
+  "notes": ""
+},
+{
+  "id": "title1-151",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "舌",
+  "meaning": "혀",
+  "sound": "설",
+  "notes": ""
+},
+{
+  "id": "title1-152",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "舛",
+  "meaning": "어그러질",
+  "sound": "천",
+  "notes": ""
+},
+{
+  "id": "title1-153",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "舟",
+  "meaning": "배",
+  "sound": "주",
+  "notes": ""
+},
+{
+  "id": "title1-154",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "艮",
+  "meaning": "괘 이름",
+  "sound": "간",
+  "notes": ""
+},
+{
+  "id": "title1-155",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "色",
+  "meaning": "빛",
+  "sound": "색",
+  "notes": ""
+},
+{
+  "id": "title1-156",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "艸",
+  "meaning": "풀",
+  "sound": "초",
+  "notes": ""
+},
+{
+  "id": "title1-157",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "虍",
+  "meaning": "범호엄",
+  "notes": ""
+},
+{
+  "id": "title1-158",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "虫",
+  "meaning": "벌레",
+  "sound": "충/훼",
+  "notes": ""
+},
+{
+  "id": "title1-159",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "血",
+  "meaning": "피",
+  "sound": "혈",
+  "notes": ""
+},
+{
+  "id": "title1-160",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "行",
+  "meaning": "다닐",
+  "sound": "행",
+  "notes": ""
+},
+{
+  "id": "title1-161",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "衣",
+  "meaning": "옷",
+  "sound": "의",
+  "notes": ""
+},
+{
+  "id": "title1-162",
+  "group": "title1",
+  "header": "6획부수(134~162)",
+  "hanja": "襾",
+  "meaning": "덮을",
+  "sound": "아",
+  "notes": ""
+},
+{
+  "id": "title1-163",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "見",
+  "meaning": "볼",
+  "sound": "견",
+  "notes": ""
+},
+{
+  "id": "title1-164",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "角",
+  "meaning": "뿔",
+  "sound": "각",
+  "notes": ""
+},
+{
+  "id": "title1-165",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "言",
+  "meaning": "말씀",
+  "sound": "언",
+  "notes": ""
+},
+{
+  "id": "title1-166",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "谷",
+  "meaning": "골",
+  "sound": "곡",
+  "notes": ""
+},
+{
+  "id": "title1-167",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "豆",
+  "meaning": "콩",
+  "sound": "두",
+  "notes": ""
+},
+{
+  "id": "title1-168",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "豕",
+  "meaning": "돼지",
+  "sound": "시",
+  "notes": ""
+},
+{
+  "id": "title1-169",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "豸",
+  "meaning": "갖은돼지시변",
+  "notes": ""
+},
+{
+  "id": "title1-170",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "貝",
+  "meaning": "조개",
+  "sound": "패",
+  "notes": ""
+},
+{
+  "id": "title1-171",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "赤",
+  "meaning": "붉을",
+  "sound": "적",
+  "notes": ""
+},
+{
+  "id": "title1-172",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "走",
+  "meaning": "달릴",
+  "sound": "주",
+  "notes": ""
+},
+{
+  "id": "title1-173",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "足",
+  "meaning": "발",
+  "sound": "족",
+  "notes": ""
+},
+{
+  "id": "title1-174",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "身",
+  "meaning": "몸",
+  "sound": "신",
+  "notes": ""
+},
+{
+  "id": "title1-175",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "車",
+  "meaning": "수레",
+  "sound": "거/차",
+  "notes": ""
+},
+{
+  "id": "title1-176",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "辛",
+  "meaning": "매울",
+  "sound": "신",
+  "notes": ""
+},
+{
+  "id": "title1-177",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "辰",
+  "meaning": "별",
+  "sound": "진",
+  "notes": ""
+},
+{
+  "id": "title1-178",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "辵",
+  "meaning": "쉬엄쉬엄 갈",
+  "sound": "착",
+  "notes": ""
+},
+{
+  "id": "title1-179",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "邑",
+  "meaning": "고을",
+  "sound": "읍",
+  "notes": ""
+},
+{
+  "id": "title1-180",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "酉",
+  "meaning": "닭",
+  "sound": "유",
+  "notes": ""
+},
+{
+  "id": "title1-181",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "釆",
+  "meaning": "분별할",
+  "sound": "변",
+  "notes": ""
+},
+{
+  "id": "title1-182",
+  "group": "title1",
+  "header": "7획부수(163~182)",
+  "hanja": "里",
+  "meaning": "마을",
+  "sound": "리",
+  "notes": ""
+},
+{
+  "id": "title1-183",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "金",
+  "meaning": "쇠",
+  "sound": "금",
+  "notes": ""
+},
+{
+  "id": "title1-184",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "長",
+  "meaning": "길",
+  "sound": "장",
+  "notes": ""
+},
+{
+  "id": "title1-185",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "門",
+  "meaning": "문",
+  "sound": "문",
+  "notes": ""
+},
+{
+  "id": "title1-186",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "阜",
+  "meaning": "언덕",
+  "sound": "부",
+  "notes": ""
+},
+{
+  "id": "title1-187",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "隶",
+  "meaning": "미칠",
+  "sound": "이",
+  "notes": ""
+},
+{
+  "id": "title1-188",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "隹",
+  "meaning": "새",
+  "sound": "추",
+  "notes": ""
+},
+{
+  "id": "title1-189",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "雨",
+  "meaning": "비",
+  "sound": "우",
+  "notes": ""
+},
+{
+  "id": "title1-190",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "靑",
+  "meaning": "푸를",
+  "sound": "청",
+  "notes": ""
+},
+{
+  "id": "title1-191",
+  "group": "title1",
+  "header": "8획부수(183~191)",
+  "hanja": "非",
+  "meaning": "아닐",
+  "sound": "비",
+  "notes": ""
+},
+{
+  "id": "title1-192",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "面",
+  "meaning": "낯",
+  "sound": "면",
+  "notes": ""
+},
+{
+  "id": "title1-193",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "革",
+  "meaning": "가죽",
+  "sound": "혁",
+  "notes": ""
+},
+{
+  "id": "title1-194",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "韋",
+  "meaning": "가죽",
+  "sound": "위",
+  "notes": ""
+},
+{
+  "id": "title1-195",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "韭",
+  "meaning": "부추",
+  "sound": "구",
+  "notes": ""
+},
+{
+  "id": "title1-196",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "音",
+  "meaning": "소리",
+  "sound": "음",
+  "notes": ""
+},
+{
+  "id": "title1-197",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "頁",
+  "meaning": "머리",
+  "sound": "혈",
+  "notes": ""
+},
+{
+  "id": "title1-198",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "風",
+  "meaning": "바람",
+  "sound": "풍",
+  "notes": ""
+},
+{
+  "id": "title1-199",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "飛",
+  "meaning": "날",
+  "sound": "비",
+  "notes": ""
+},
+{
+  "id": "title1-200",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "食(飠)",
+  "meaning": "밥",
+  "sound": "식(변)",
+  "notes": ""
+},
+{
+  "id": "title1-201",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "首",
+  "meaning": "머리",
+  "sound": "수",
+  "notes": ""
+},
+{
+  "id": "title1-202",
+  "group": "title1",
+  "header": "9획부수(192~202)",
+  "hanja": "香",
+  "meaning": "향기",
+  "sound": "향",
+  "notes": ""
+},
+{
+  "id": "title1-203",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "馬",
+  "meaning": "말",
+  "sound": "마",
+  "notes": ""
+},
+{
+  "id": "title1-204",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "骨",
+  "meaning": "뼈",
+  "sound": "골",
+  "notes": ""
+},
+{
+  "id": "title1-205",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "高",
+  "meaning": "높을",
+  "sound": "고",
+  "notes": ""
+},
+{
+  "id": "title1-206",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "髟",
+  "meaning": "터럭 발",
+  "notes": ""
+},
+{
+  "id": "title1-207",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "鬥",
+  "meaning": "싸울",
+  "sound": "투",
+  "notes": ""
+},
+{
+  "id": "title1-208",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "鬯",
+  "meaning": "울창주 창",
+  "notes": ""
+},
+{
+  "id": "title1-209",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "鬲",
+  "meaning": "솥 력",
+  "notes": ""
+},
+{
+  "id": "title1-210",
+  "group": "title1",
+  "header": "10획부수(203~210)",
+  "hanja": "鬼",
+  "meaning": "귀신",
+  "sound": "귀",
+  "notes": ""
+},
+{
+  "id": "title1-211",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "魚",
+  "meaning": "물고기",
+  "sound": "어",
+  "notes": ""
+},
+{
+  "id": "title1-212",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "鳥",
+  "meaning": "새",
+  "sound": "조",
+  "notes": ""
+},
+{
+  "id": "title1-213",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "鹵",
+  "meaning": "소금밭",
+  "sound": "로",
+  "notes": ""
+},
+{
+  "id": "title1-214",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "鹿",
+  "meaning": "사슴",
+  "sound": "록",
+  "notes": ""
+},
+{
+  "id": "title1-215",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "麥",
+  "meaning": "보리",
+  "sound": "맥",
+  "notes": ""
+},
+{
+  "id": "title1-216",
+  "group": "title1",
+  "header": "11획부수(211~216)",
+  "hanja": "麻",
+  "meaning": "삼",
+  "sound": "마",
+  "notes": ""
+},
+{
+  "id": "title1-217",
+  "group": "title1",
+  "header": "12획부수(217~220)",
+  "hanja": "黃",
+  "meaning": "누를",
+  "sound": "황",
+  "notes": ""
+},
+{
+  "id": "title1-218",
+  "group": "title1",
+  "header": "12획부수(217~220)",
+  "hanja": "黍",
+  "meaning": "기장",
+  "sound": "서",
+  "notes": ""
+},
+{
+  "id": "title1-219",
+  "group": "title1",
+  "header": "12획부수(217~220)",
+  "hanja": "黑",
+  "meaning": "검을",
+  "sound": "흑",
+  "notes": ""
+},
+{
+  "id": "title1-220",
+  "group": "title1",
+  "header": "12획부수(217~220)",
+  "hanja": "黹",
+  "meaning": "바느질할",
+  "sound": "치",
+  "notes": ""
+},
+{
+  "id": "title1-221",
+  "group": "title1",
+  "header": "13획부수(221~224)",
+  "hanja": "黽",
+  "meaning": "맹꽁이",
+  "sound": "맹",
+  "notes": ""
+},
+{
+  "id": "title1-222",
+  "group": "title1",
+  "header": "13획부수(221~224)",
+  "hanja": "鼎",
+  "meaning": "솥",
+  "sound": "정",
+  "notes": ""
+},
+{
+  "id": "title1-223",
+  "group": "title1",
+  "header": "13획부수(221~224)",
+  "hanja": "鼓",
+  "meaning": "북",
+  "sound": "고",
+  "notes": ""
+},
+{
+  "id": "title1-224",
+  "group": "title1",
+  "header": "13획부수(221~224)",
+  "hanja": "鼠",
+  "meaning": "쥐",
+  "sound": "서",
+  "notes": ""
+},
+{
+  "id": "title1-225",
+  "group": "title1",
+  "header": "14획부수(225~226)",
+  "hanja": "鼻",
+  "meaning": "코",
+  "sound": "비",
+  "notes": ""
+},
+{
+  "id": "title1-226",
+  "group": "title1",
+  "header": "14획부수(225~226)",
+  "hanja": "齊",
+  "meaning": "가지런할",
+  "sound": "제",
+  "notes": ""
+},
+{
+  "id": "title1-227",
+  "group": "title1",
+  "header": "15획부수(227)",
+  "hanja": "齒",
+  "meaning": "이",
+  "sound": "치",
+  "notes": ""
+},
+{
+  "id": "title1-228",
+  "group": "title1",
+  "header": "16획부수(228~229)",
+  "hanja": "龍",
+  "meaning": "용",
+  "sound": "룡",
+  "notes": ""
+},
+{
+  "id": "title1-229",
+  "group": "title1",
+  "header": "16획부수(228~229)",
+  "hanja": "龜",
+  "meaning": "거북",
+  "sound": "귀",
+  "notes": ""
+},
+{
+  "id": "title1-230",
+  "group": "title1",
+  "header": "17획부수(230)",
+  "hanja": "龠",
+  "meaning": "피리",
+  "sound": "약",
+  "notes": ""
+}
+]
