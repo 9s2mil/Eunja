@@ -1,8 +1,9 @@
 {
+  "id": "/hanja",
   "name": "암기 학습 노트",
   "short_name": "암기노트",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",

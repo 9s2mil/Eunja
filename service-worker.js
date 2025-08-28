@@ -1,15 +1,14 @@
-const CACHE_NAME = "note-cache-v1";
+const CACHE_NAME = "note-cache-v2";
 
 const FILES_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/Study.css",
-  "/Study.js",
-  "/title.js",
-  "/title-1.json",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  "index.html",
+  "manifest.json",
+  "Study.css",
+  "Study.js",
+  "title.js",
+  "title-1.json",
+  "icons/icon-192.png",
+  "icons/icon-512.png"
 ];
 
 
