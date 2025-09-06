@@ -9,11 +9,21 @@ let isPaused = false;
 
 //⚔️메인 주제열기
 function openPopup(num) {
-    var curtain = document.querySelector('.curtain'); 
-        document.getElementById(`title${num}-1`).style.display = "block";
-        curtain.style.display = "block"; 
-        updateGoToPopupButtonLabel();
+    const curtain = document.querySelector('.curtain');
+    const first = document.getElementById(`title${num}-1`);
+    if (!first) { alert(`title${num}-1이 아직 없습니다. 자료를 먼저 불러오시오.`); return; }
+    first.style.display = "block";
+    if (curtain) curtain.style.display = "block";
+    updateGoToPopupButtonLabel();
 }
+
+// 5번: JSON 생성 후 열기 (이미 이 형태면 유지)
+async function title5Open() {
+    await loadTitleFromJson(5, 'title-5.json');
+    setLastYForX?.(5, 1);
+    openPopup(5);
+}
+
 function title1Open() { openPopup(1); }
 function title2Open() { openPopup(2); }
 function title3Open() { openPopup(3); }
