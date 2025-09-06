@@ -98,7 +98,3 @@ async function renderPopupFromJSON(jsonUrl, containerSelector) {
         document.querySelector(containerSelector)?.dispatchEvent(new CustomEvent('popups-rendered'));
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderPopupFromJSON('title-1.json', '#popupContainer');
-});

@@ -18,7 +18,10 @@ function title1Open() { openPopup(1); }
 function title2Open() { openPopup(2); }
 function title3Open() { openPopup(3); }
 function title4Open() { openPopup(4); }
-function title5Open() { openPopup(5); }
+async function title5Open() {
+    await renderPopupFromJSON('title-5.json', '#popupContainer');
+    openPopup(5);
+}
 function title6Open() { openPopup(6); }
 function title7Open() { openPopup(7); }
 function title8Open() { openPopup(8); }
