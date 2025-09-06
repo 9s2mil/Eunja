@@ -481,3 +481,332 @@ document.querySelector(".stopLoopButton").addEventListener("click", () => {
     document.querySelector(".pauseLoopButton").style.display = "none";
     document.querySelector(".stopLoopButton").style.display = "none";
 });
+
+/*
+ * 모체 통합 패치 (index.html + Study.js)
+ * 기능: TXT 업로드 → 현재 그룹에 카드 생성, 즐겨찾기(⭐) 토글/집계(title99)
+ * 대상: Study.js에 붙여넣기 (하단 또는 유틸 직후), index.html에 버튼 2개 추가
+ *
+ * ──────────────────────────────────────────────────────────────
+ * 1) index.html 수정 (버튼 2곳)
+ *   A. 헤더에 업로드 버튼 추가 (📂)
+ *      <button class="headerButtonStyle" id="txtUpload" onclick="txtUpload()">📂</button>
+ *      ※ 위치: #rtHiddenButton 다음, #closePopupButton 이전
+ *   B. 메인에 즐겨찾기 버튼 추가
+ *      <button class="mainButtonStyle" id="titleOpenBookmark" onclick="titleBookmarkOpen()">⚔️<br>즐겨찾기<br>.</button>
+ *      ※ 위치: 메인 버튼 그리드 중 적당한 자리에 1개 추가
+ *
+ * 2) Study.js 추가 코드 (본 파일 이하 붙여넣기)
+ */
+
+// ──────────────────────────────────────────────────────────────
+// LocalStorage 키/좌표 유틸
+function storageKeyForX(x) { return `popups_title${x}`; }
+function getLastYForX(x) { try { return parseInt(localStorage.getItem(`last_view_title${x}`) || "", 10) || null; } catch (e) { return null; } }
+function setLastYForX(x, y) { try { localStorage.setItem(`last_view_title${x}`, String(y)); } catch (e) { } }
+
+// ──────────────────────────────────────────────────────────────
+// 동적 팝업 생성 (titleX-Y) — 즐겨찾기 집계(title99)나 업로드 시 사용
+function createPopupNode(x, y, ko, han) {
+    const id = `title${x}-${y}`;
+    if (document.getElementById(id)) return document.getElementById(id);
+    const wrap = document.createElement('div');
+    wrap.className = 'popup';
+    wrap.id = id;
+    wrap.style.display = 'none';
+    wrap.innerHTML = `
+    <div class="top"><div class="inner">
+      <button class="FavoriteButton" id="FavoriteButton${x}-${y}">⭐</button>
+      <h6 class="mainText"></h6>
+      <p class="HanjaText">${han || ''}</p>
+      <h6 class="hidetext">.</h6>
+    </div></div>
+    <div class="bottom"><div class="inner">
+      <h1 class="particularText">${ko || ''}</h1>
+    </div></div>`;
+    const container = document.getElementById('popupContainer') || document.body;
+    container.appendChild(wrap);
+    // ⭐ 리스너 + 저장 상태 복원
+    const favBtn = wrap.querySelector(`#FavoriteButton${x}-${y}`);
+    if (favBtn) {
+        favBtn.addEventListener('click', () => toggleFavorite(x, y, favBtn));
+        try {
+            const arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || [];
+            const rec = arr.find(r => r && r.y === y);
+            if (rec && rec.fav) favBtn.classList.add('active');
+        } catch (e) { }
+    }
+    return wrap;
+}
+
+// ──────────────────────────────────────────────────────────────
+// 정적(하드코딩) 팝업들에 ⭐ 단추 주입
+function injectFavoriteButtons() {
+    document.querySelectorAll('.popup').forEach(p => {
+        const id = p.id; // titleX-Y
+        const m = id && id.match(/title(\d+)-(\d+)/);
+        if (!m) return;
+        const x = parseInt(m[1], 10), y = parseInt(m[2], 10);
+        // 이미 있으면 스킵
+        if (p.querySelector(`#FavoriteButton${x}-${y}`)) return;
+        const host = p.querySelector('.top .inner');
+        if (!host) return;
+        const btn = document.createElement('button');
+        btn.className = 'FavoriteButton';
+        btn.id = `FavoriteButton${x}-${y}`;
+        btn.textContent = '⭐';
+        btn.style.marginRight = '6px';
+        host.prepend(btn);
+        btn.addEventListener('click', () => toggleFavorite(x, y, btn));
+        // 상태 복원
+        try {
+            const arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || [];
+            const rec = arr.find(r => r && r.y === y);
+            if (rec && rec.fav) btn.classList.add('active');
+        } catch (e) { }
+    });
+}
+
+// ──────────────────────────────────────────────────────────────
+// 즐겨찾기 토글/저장 (정적/동적 공통)
+function toggleFavorite(x, y, btnEl) {
+    const key = storageKeyForX(x);
+    let arr = [];
+    try { arr = JSON.parse(localStorage.getItem(key)) || []; } catch (e) { arr = []; }
+    const node = document.getElementById(`title${x}-${y}`);
+    const koText = node?.querySelector('.particularText')?.textContent?.trim() || '';
+    const hanHtml = node?.querySelector('.HanjaText')?.innerHTML?.trim() || '';
+    const now = Date.now();
+    const idx = arr.findIndex(r => r && r.y === y);
+    let nextFav = true;
+    if (idx >= 0) {
+        const rec = arr[idx] || {};
+        nextFav = !rec.fav;
+        arr[idx] = { y, ko: rec.ko || koText, han: rec.han || hanHtml, fav: nextFav, favAt: nextFav ? (rec.favAt || now) : undefined };
+    } else {
+        arr.push({ y, ko: koText, han: hanHtml, fav: true, favAt: now });
+        nextFav = true;
+    }
+    arr.sort((a, b) => (a?.y || 0) - (b?.y || 0));
+    localStorage.setItem(key, JSON.stringify(arr));
+    if (btnEl) btnEl.classList.toggle('active', nextFav);
+    window.dispatchEvent(new CustomEvent('favorites:changed'));
+}
+
+// ──────────────────────────────────────────────────────────────
+// 즐겨찾기 집계(title99) 생성 + 원본 점프 표시
+function buildFavoritesTitle99(sort = 'recent') {
+    try { localStorage.removeItem(storageKeyForX(99)); } catch (e) { }
+    document.querySelectorAll('.popup[id^="title99-"]').forEach(n => n.remove());
+
+    const collected = [];
+    for (let x = 1; x <= 200; x++) {
+        if (x === 99) continue;
+        let arr = []; try { arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || []; } catch (e) { arr = []; }
+        arr.forEach(rec => { if (rec && rec.fav) { collected.push({ srcX: x, srcY: rec.y, ko: rec.ko || '', han: rec.han || '', fav: true, favAt: rec.favAt || 0 }); } });
+    }
+    if (!collected.length) return 0;
+    if (sort === 'recent') collected.sort((a, b) => (b.favAt || 0) - (a.favAt || 0));
+    else if (sort === 'source') collected.sort((a, b) => (a.srcX - b.srcX) || (a.srcY - b.srcY));
+
+    const out = collected.map((it, i) => ({ y: i + 1, ko: it.ko, han: it.han, fav: true, srcX: it.srcX, srcY: it.srcY }));
+    localStorage.setItem(storageKeyForX(99), JSON.stringify(out));
+
+    out.forEach(it => {
+        const node = createPopupNode(99, it.y, it.ko, it.han);
+        // 즐겨찾기 화면의 ⭐ → 원본 토글로 전환
+        const favBtn = node?.querySelector(`#FavoriteButton99-${it.y}`);
+        if (favBtn) {
+            const clone = favBtn.cloneNode(true);
+            clone.classList.add('active');
+            favBtn.replaceWith(clone);
+            clone.addEventListener('click', (ev) => {
+                ev.stopPropagation(); ev.preventDefault();
+                toggleFavorite(it.srcX, it.srcY, null);
+                window.dispatchEvent(new CustomEvent('favorites:changed'));
+            });
+        }
+        const tag = node?.querySelector('.mainText');
+        if (tag) {
+            tag.textContent = `(title${it.srcX}-${it.srcY})`;
+            tag.style.cursor = 'pointer';
+            tag.title = '원본으로 이동';
+            tag.addEventListener('click', () => { setLastYForX(it.srcX, it.srcY); openPopup(it.srcX); });
+        }
+    });
+    if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel();
+    return out.length;
+}
+
+function titleBookmarkOpen() {
+    const count = buildFavoritesTitle99('recent');
+    if (!count) { showToast('북마크가 없습니다.', 1600); return; }
+    setLastYForX(99, 1);
+    openPopup(99);
+}
+
+// ──────────────────────────────────────────────────────────────
+// TXT 업로드 (각 줄: "뜻;漢字")
+function txtUpload() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt,text/plain';
+    input.onchange = async () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const text = await file.text();
+        const lines = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+        if (!lines.length) { showToast('유효한 줄이 없습니다.', 1500); return; }
+
+        // 현재 열린 X 찾기 → 없으면 2로 기본(배정한자)
+        const current = document.querySelector('.popup[style*="display: block"]');
+        let x = 2;
+        if (current) { const m = current.id.match(/title(\d+)-(\d+)/); if (m) x = parseInt(m[1], 10) || 2; }
+
+        // 기존 배열 로드 → 다음 y부터 채우기
+        let arr = []; try { arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || []; } catch (e) { arr = []; }
+        let nextY = arr.reduce((max, r) => Math.max(max, r?.y || 0), 0) + 1;
+
+        const created = [];
+        for (const line of lines) {
+            const [koRaw, hanRaw] = line.split(';');
+            const ko = (koRaw || '').trim();
+            const han = (hanRaw || '').trim();
+            if (!ko && !han) continue;
+            arr.push({ y: nextY, ko, han, fav: false });
+            createPopupNode(x, nextY, ko, han);
+            created.push(nextY);
+            nextY++;
+        }
+        localStorage.setItem(storageKeyForX(x), JSON.stringify(arr));
+
+        if (created.length) {
+            setLastYForX(x, created[0]);
+            openPopup(x);
+            showToast(`${created.length}개 추가됨 (title${x})`, 1600);
+        } else {
+            showToast('추가된 항목이 없습니다.', 1500);
+        }
+    };
+    input.click();
+}
+
+// ──────────────────────────────────────────────────────────────
+// 즐겨찾기 화면 열려있을 때 실시간 갱신 + 빈 경우 새로고침
+window.addEventListener('favorites:changed', () => {
+    const current = document.querySelector('.popup[style*="display: block"]');
+    if (!current) return;
+    const m = current.id.match(/title(\d+)-(\d+)/);
+    if (!m) return;
+    const x = parseInt(m[1], 10), y = parseInt(m[2], 10);
+    if (x !== 99) return;
+    const count = buildFavoritesTitle99('recent');
+    if (!count) { window.location.reload(); return; }
+    const targetY = Math.min(y, count);
+    setLastYForX(99, targetY); openPopup(99);
+});
+
+// ──────────────────────────────────────────────────────────────
+// 경량 토스트
+function ensureToastHost() {
+    let host = document.getElementById('appToastHost');
+    if (host) return host;
+    host = document.createElement('div');
+    host.id = 'appToastHost';
+    Object.assign(host.style, { position: 'fixed', left: '50%', bottom: '8vh', transform: 'translateX(-50%)', zIndex: '10050', display: 'flex', flexDirection: 'column', gap: '8px', pointerEvents: 'none' });
+    document.body.appendChild(host);
+    return host;
+}
+function showToast(message, duration = 1500) {
+    const host = ensureToastHost();
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    Object.assign(toast.style, { maxWidth: '86vw', padding: '10px 14px', borderRadius: '10px', background: 'rgba(30,30,30,0.92)', color: '#f4f4f4', boxShadow: '0 6px 20px rgba(0,0,0,0.25)', fontSize: '14px', letterSpacing: '0.2px', lineHeight: '1.2', opacity: '0', transform: 'translateY(10px)', transition: 'opacity .18s ease, transform .18s ease', pointerEvents: 'auto' });
+    host.appendChild(toast);
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(10px)'; setTimeout(() => toast.remove(), 220); }, Math.max(800, duration));
+}
+
+// ──────────────────────────────────────────────────────────────
+// 초기화: 정적 팝업에 ⭐ 주입 + 스토리지 복원(있다면) + 라벨 갱신
+(function initFavoritesAndUpload() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => { injectFavoriteButtons(); restorePopupsFromStorage(); if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel(); });
+    } else {
+        injectFavoriteButtons(); restorePopupsFromStorage(); if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel();
+    }
+})();
+
+// ──────────────────────────────────────────────────────────────
+// 로컬 스토리지에 있는 동적 팝업 복원
+function restorePopupsFromStorage() {
+    for (let x = 1; x <= 200; x++) {
+        const key = storageKeyForX(x);
+        let arr = []; try { arr = JSON.parse(localStorage.getItem(key)) || []; } catch (e) { arr = []; }
+        if (!arr.length) continue;
+        arr.forEach(rec => createPopupNode(x, rec.y, rec.ko, rec.han));
+    }
+    if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel();
+}
+
+function resetLocalPopups() {
+    if (!confirm('정말 초기화하시겠습니까? 입력한 모든 내용이 삭제됩니다.')) return;
+
+    // 1) localStorage에서 본 앱의 팝업 데이터 제거 (키: popups_titleX)
+    try {
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith('popups_title')) localStorage.removeItem(k);
+        });
+    } catch (e) {
+        console.error('스토리지 초기화 중 오류:', e);
+    }
+
+    // 2) 동적으로 생성된 팝업 DOM 제거 (#popupContainer 하위만 비움)
+    //    #popupContainer는 이미 문서에 존재합니다.
+    const container = document.getElementById('popupContainer');
+    if (container) container.innerHTML = '';
+
+    // 3) 헤더 라벨 갱신 (열린 팝업이 없으면 "🌊"으로 돌아감)
+    if (typeof updateGoToPopupButtonLabel === 'function') {
+        updateGoToPopupButtonLabel(); // 기존 파일에 이미 정의되어 있음
+    }
+
+    alert('시스템 입력 초기화.');
+    setTimeout(() => window.location.reload(), 50)
+}
+
+// JSON으로 titleX 그룹을 한 번만 동적 생성하옵니다
+async function loadTitleFromJson(x, jsonPath) {
+    // 이미 만들어졌으면 재생성 생략하옵니다
+    if (document.querySelector(`.popup[id^="title${x}-"]`)) return;
+
+    let data;
+    try {
+        const res = await fetch(jsonPath);
+        data = await res.json();
+    } catch (e) {
+        console.error(e);
+        alert('자료를 불러오지 못하였사옵니다');
+        return;
+    }
+    if (!Array.isArray(data)) return;
+
+    // JSON 순서대로 y=1부터 연속 넘버링하여 팝업 생성하옵니다
+    data.forEach((item, idx) => {
+        const y = idx + 1;
+        const ko = [item?.meaning, item?.sound].filter(Boolean).join('\n'); // 뜻 + 음을 아래칸에 표기하옵니다
+        const han = item?.hanja || '';                                       // 한자를 위칸에 표기하옵니다
+        const node = createPopupNode(x, y, ko, han);
+        const head = node?.querySelector('.mainText');
+        if (head) head.textContent = item?.header || '';
+    });
+
+    if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel();
+}
+
+// 5번 버튼 동작: 필요 시 JSON 로드 → 5-1 바로 열기 하옵니다
+async function title5Open() {
+    await loadTitleFromJson(5, 'title-5.json');
+    setLastYForX?.(5, 1);
+    openPopup(5);
+}
