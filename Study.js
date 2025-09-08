@@ -6,9 +6,11 @@ let autoLoopEnabled = false;
 let autoLoopDelaySec = null;
 let autoLoopTimeout = null;
 let isPaused = false;
+let pendingUpload = null;
 
 //⚔️메인 주제열기
 function openPopup(num) {
+    applyPendingUploadIfAny(num);
     const curtain = document.querySelector('.curtain');
     const first = document.getElementById(`title${num}-1`);
     if (!first) { alert(`title${num}-1이 아직 없습니다. 자료를 먼저 불러오시오.`); return; }
@@ -522,7 +524,55 @@ function storageKeyForX(x) { return `popups_title${x}`; }
 function getLastYForX(x) { try { return parseInt(localStorage.getItem(`last_view_title${x}`) || "", 10) || null; } catch (e) { return null; } }
 function setLastYForX(x, y) { try { localStorage.setItem(`last_view_title${x}`, String(y)); } catch (e) { } }
 
-// ──────────────────────────────────────────────────────────────
+// TXT 한 줄: "뜻;漢字" 또는 "뜻<TAB>漢字" 지원
+function parseTxtToRecords(text) {
+    return text
+        .split(/\r?\n/)
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(line => {
+            const parts = line.split(/[;\t]/);
+            const ko = (parts[0] || '').trim();
+            const han = (parts[1] || '').trim();
+            return { ko, han };
+        });
+}
+
+// records를 titleX-* 그룹에 이어붙이고 DOM도 생성
+function addRecordsToGroup(x, records) {
+    let arr;
+    try { arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || []; }
+    catch (e) { arr = []; }
+
+    // 다음 y 계산
+    let nextY = 1;
+    if (arr.length) {
+        const maxY = arr.reduce((m, r) => Math.max(m, parseInt(r?.y || 0, 10)), 0);
+        nextY = maxY + 1;
+    }
+
+    // 저장 + 노드 생성
+    records.forEach(rec => {
+        const y = nextY++;
+        arr.push({ y, ko: rec.ko, han: rec.han, fav: false });
+        createPopupNode(x, y, rec.ko, rec.han); // 이미 정의됨
+    });
+
+    localStorage.setItem(storageKeyForX(x), JSON.stringify(arr));
+    setLastYForX(x, 1);
+    if (typeof updateGoToPopupButtonLabel === 'function') updateGoToPopupButtonLabel();
+    return records.length;
+}
+
+// 업로드 대기분이 있으면 현재 X에 주입
+function applyPendingUploadIfAny(x) {
+    if (!pendingUpload || !pendingUpload.records?.length) return false;
+    const n = addRecordsToGroup(x, pendingUpload.records);
+    (window.showToast || alert)(`TXT ${n}개를 title${x}에 넣었습니다.`);
+    pendingUpload = null;
+    return true;
+}
+
 // 동적 팝업 생성 (titleX-Y) — 즐겨찾기 집계(title99)나 업로드 시 사용
 function createPopupNode(x, y, ko, han) {
     const id = `title${x}-${y}`;
@@ -663,50 +713,35 @@ function titleBookmarkOpen() {
 }
 
 // ──────────────────────────────────────────────────────────────
-// TXT 업로드 (각 줄: "뜻;漢字")
 function txtUpload() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.txt,text/plain';
+
     input.onchange = async () => {
         const file = input.files && input.files[0];
         if (!file) return;
+
         const text = await file.text();
-        const lines = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-        if (!lines.length) { showToast('유효한 줄이 없습니다.', 1500); return; }
+        const records = parseTxtToRecords(text);
+        if (!records.length) { (window.showToast || alert)('유효한 줄이 없습니다.'); return; }
 
-        // 현재 열린 X 찾기 → 없으면 1로 기본
-        const current = document.querySelector('.popup[style*="display: block"]');
-        let x = 1;
-        if (current) { const m = current.id.match(/title(\d+)-(\d+)/); if (m) x = parseInt(m[1], 10) || 2; }
+        // ➊ 업로드 결과를 '대기' 상태로 저장
+        pendingUpload = { records, name: file.name };
 
-        // 기존 배열 로드 → 다음 y부터 채우기
-        let arr = []; try { arr = JSON.parse(localStorage.getItem(storageKeyForX(x))) || []; } catch (e) { arr = []; }
-        let nextY = arr.reduce((max, r) => Math.max(max, r?.y || 0), 0) + 1;
+        // ➋ 메인 화면으로 복귀 (열린 팝업이 있다면 닫기)
+        if (typeof closePopup === 'function') closePopup();
 
-        const created = [];
-        for (const line of lines) {
-            const [koRaw, hanRaw] = line.split(';');
-            const ko = (koRaw || '').trim();
-            const han = (hanRaw || '').trim();
-            if (!ko && !han) continue;
-            arr.push({ y: nextY, ko, han, fav: false });
-            createPopupNode(x, nextY, ko, han);
-            created.push(nextY);
-            nextY++;
-        }
-        localStorage.setItem(storageKeyForX(x), JSON.stringify(arr));
-
-        if (created.length) {
-            setLastYForX(x, created[0]);
-            openPopup(x);
-            showToast(`${created.length}개 추가됨 (title${x})`, 1600);
-        } else {
-            showToast('추가된 항목이 없습니다.', 1500);
-        }
+        // ➌ 안내
+        (window.showToast || alert)('파일을 불러왔습니다. 메인 버튼을 눌러 넣을 위치를 선택하세요.');
     };
+
     input.click();
 }
+
+// 인라인 핸들러가 window.txtUpload를 부르는 경우 대비
+window.txtUpload = txtUpload;
+
 
 // ──────────────────────────────────────────────────────────────
 // 즐겨찾기 화면 열려있을 때 실시간 갱신 + 빈 경우 새로고침
@@ -826,4 +861,31 @@ async function title5Open() {
     await loadTitleFromJson(5, 'title-5.json');
     setLastYForX?.(5, 1);
     openPopup(5);
+}
+
+function pickUploadTargetX(defaultX = 1) {
+  return new Promise(resolve => {
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);z-index:2000;';
+    wrap.innerHTML = `
+      <div style="background:#fff;border-radius:12px;padding:16px 16px 12px;min-width:260px;border:2px solid #d4af37;">
+        <div style="font-weight:bold;margin-bottom:8px;text-align:center">업로드 대상 선택 (titleX)</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px;">
+          ${Array.from({length:10},(_,i)=>i+1).map(n=>`<button data-x="${n}" style="padding:10px;border:2px solid #d4af37;background:#fff;cursor:pointer">${n}</button>`).join('')}
+        </div>
+        <div style="text-align:center">
+          <button data-x="cancel" style="padding:8px 14px;border:2px solid #555;background:#555;color:#fff;cursor:pointer">기본값(${defaultX})</button>
+        </div>
+      </div>`;
+    document.body.appendChild(wrap);
+    function done(val){ document.body.removeChild(wrap); resolve(val); }
+    wrap.querySelectorAll('button[data-x]').forEach(b=>{
+      b.addEventListener('click',()=> {
+        const v = b.getAttribute('data-x');
+        if (v === 'cancel') return done(defaultX);
+        const n = parseInt(v,10);
+        done(Number.isFinite(n)? n : defaultX);
+      });
+    });
+  });
 }
