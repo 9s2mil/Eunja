@@ -35,6 +35,10 @@ async function title5Open() {
 function title6Open() { openPopup(6); }
 function title7Open() { openPopup(7); }
 function title8Open() { openPopup(8); }
+function title9Open() { openPopup(9); }
+function title10Open() { openPopup(10); }
+function title11Open() { openPopup(11); } 
+function title12Open() { openPopup(12); }
 
 //헤더 버튼
 //🌊페이지 이동 팝업열기
@@ -671,9 +675,9 @@ function txtUpload() {
         const lines = text.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
         if (!lines.length) { showToast('유효한 줄이 없습니다.', 1500); return; }
 
-        // 현재 열린 X 찾기 → 없으면 2로 기본(배정한자)
+        // 현재 열린 X 찾기 → 없으면 1로 기본
         const current = document.querySelector('.popup[style*="display: block"]');
-        let x = 2;
+        let x = 1;
         if (current) { const m = current.id.match(/title(\d+)-(\d+)/); if (m) x = parseInt(m[1], 10) || 2; }
 
         // 기존 배열 로드 → 다음 y부터 채우기
