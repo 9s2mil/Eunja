@@ -339,20 +339,26 @@ rt {
     margin: -5vh 0;
     line-height: 1;
 }
+.HanjaText .mid { color: rgb(255, 218, 200) !important; font-size: calc(4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baselin1e;}
 .HanjaText .minitext { font-size: calc(3.4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baseline;}
-.HanjaText .tiny { color: #f27f7f !important; font-size: calc(1.4em / 7.5); line-height: 1.0; font-weight: bold;}
-
+.HanjaText .tiny { color: #f2c67f !important; font-size: calc(1.4em / 7.5); line-height: 1.0; font-weight: bold;}
+.HanjaText .nano  { font-size: calc(1em / 7.5); font-weight: bold; }
+.HanjaText .nanoLine { display: block; font-size: calc(1em / 7.5); line-height: 1.2; margin: 0; font-weight: bold; }
+.HanjaText .nanoLine2 {
+    display: block;
+    color: rgb(194, 174, 150)!important;
+    font-size: calc(1em / 7.5);
+    line-height: 1.2;
+    margin: 0;
+    font-weight: bold;
+}
 .particularText {
     color: #f4cfb3;
     white-space: pre-line;
 }
 .particularText .mini  { font-size: 0.72em; line-height: 1.05; }
 .particularText .tiny  { font-size: 0.64em; line-height: 1.0; }
-
-.particularText .highlight {
-    color: #fcbf97;
-    font-size: 115%;
-}
+.particularText .highlight { color: #fcbf97; font-size: 115%; }
 
 .pauseLoopButton,
 .stopLoopButton {

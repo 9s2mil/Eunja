@@ -531,7 +531,7 @@ function parseTxtToRecords(text) {
         .map(s => s.trim())
         .filter(Boolean)
         .map(line => {
-            const parts = line.split(/[;\t]/);
+            const parts = line.split(';');
             const ko = (parts[0] || '').trim();
             const han = (parts[1] || '').trim();
             return { ko, han };
