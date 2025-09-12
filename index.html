@@ -77,6 +77,12 @@
         <button id="fixedMoveButton" onclick="fixedMove()">🐇</button>
         <button id="resetStorageButton" onclick="resetLocalPopups()">초기화</button>
       </div>
+      <div class="goToSearch">
+        <div class="equalityButton">
+          <input type="text" id="popupSearchInput" placeholder="음 또는 훈을 검색하세요" />
+          <button id="popupSearchStart" onclick="startPopupSearch()">🔍</button>
+        </div>
+      </div>
     </div>
 
 
@@ -7355,7 +7361,7 @@
     <div class="bottom"><div class="inner"><h1 class="particularText">실 산</h1></div></div></div>
     <div class="popup" id="title3-616">
     <div class="top"><div class="inner"><h6 class="mainText">2급 한자 ㅅ (0594-0763)</h6><p class="HanjaText">撒</p><h6 class="hidetext">.</h6></div></div>
-    <div class="bottom"><div class="inner"><h1 class="particularText">뿌릴 산</h1></div></div></div>
+    <div class="bottom"><div class="inner"><h1 class="particularText">뿌릴 살</h1></div></div></div>
     <div class="popup" id="title3-617">
     <div class="top"><div class="inner"><h6 class="mainText">2급 한자 ㅅ (0594-0763)</h6><p class="HanjaText">煞</p><h6 class="hidetext">.</h6></div></div>
     <div class="bottom"><div class="inner"><h1 class="particularText">죽일 살<br>빠를 쇄</h1></div></div></div>
@@ -7592,7 +7598,7 @@
     <div class="bottom"><div class="inner"><h1 class="particularText">속죄할 속</h1></div></div></div>
     <div class="popup" id="title3-695">
     <div class="top"><div class="inner"><h6 class="mainText">2급 한자 ㅅ (0594-0763)</h6><p class="HanjaText">巽</p><h6 class="hidetext">.</h6></div></div>
-    <div class="bottom"><div class="inner"><h1 class="particularText">부드러울 손<br>손괘 곤</h1></div></div></div>
+    <div class="bottom"><div class="inner"><h1 class="particularText">부드러울 손<br>손괘 손</h1></div></div></div>
     <div class="popup" id="title3-696">
     <div class="top"><div class="inner"><h6 class="mainText">2급 한자 ㅅ (0594-0763)</h6><p class="HanjaText">遜</p><h6 class="hidetext">.</h6></div></div>
     <div class="bottom"><div class="inner"><h1 class="particularText">겸손할 손</h1></div></div></div>
@@ -14853,6 +14859,18 @@
     </div>
   <div>
     
+</div>
+
+<div id="searchNavPopup" class="goToPopup">
+  <div class="popupContent" style="max-width:420px;">
+    <div class="popupHeader">검색 결과 이동</div>
+    <div id="searchNavInfo" style="margin:8px 0 12px; font-size:13px; opacity:.9;"></div>
+    <div class="equalityButton" style="gap:8px;">
+      <button onclick="prevPopupSearch()">이전</button>
+      <button onclick="nextPopupSearch()">다음</button>
+      <button onclick="closeSearchNavPopup()">닫기</button>
+    </div>
+  </div>
 </div>
 
 <script src="title.js" defer></script>
