@@ -11,7 +11,7 @@ let pendingUpload = null;
 //태그 변환로직
 (() => {
     // 이스케이프용 자리표시자
-    const ESC = { '$': '\uE000', '#': '\uE001', '%': '\uE002' };
+    const ESC = { '$': '\uE000', '#': '\uE001', '%': '\uE002', '&': '\uE003' };
 
     const CLASS_MAP = {
         mid: 'mid',
@@ -26,14 +26,14 @@ let pendingUpload = null;
             .replace(/\\\$/g, ESC['$'])
             .replace(/\\#/g, ESC['#'])
             .replace(/\\%/g, ESC['%'])
-            .replace(/\\%/g, ESC['@']);
+            .replace(/\\%/g, ESC['&']);
     }
     function unescapePlaceholders(s) {
         return s
             .replace(/\uE000/g, '$')
             .replace(/\uE001/g, '#')
-            .replace(/\uE001/g, '@')
-            .replace(/\uE002/g, '%');
+            .replace(/\uE001/g, '%')
+            .replace(/\uE002/g, '&');
     }
     function escRe(ch) { return ch.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'); }
 
@@ -62,8 +62,8 @@ let pendingUpload = null;
         // 간단형 3종
         out = replacePair(out, '$', 'mid');       // $…$  → <span class="mid">
         out = replacePair(out, '#', 'main');  // #…#  → <span class="nano">
-        out = replacePair(out, '@', 'micro');  // #…#  → <span class="micro">
         out = replacePair(out, '%', 'mini');  // %…%  → <span class="minitext">
+        out = replacePair(out, '&', 'micro');  // #…#  → <span class="micro">
 
         return unescapePlaceholders(out);
     }
@@ -77,9 +77,9 @@ let pendingUpload = null;
             NodeFilter.SHOW_TEXT,
             {
                 acceptNode(node) {
-                    return /(\$|#|%|@\()/.test(node.nodeValue)
-                        ? NodeFilter.FILTER_ACCEPT
-                        : NodeFilter.FILTER_REJECT;
+                return /(\$|#|%|&\()/.test(node.nodeValue)
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_REJECT;
                 }
             }
         );
@@ -97,7 +97,7 @@ let pendingUpload = null;
         }
 
         const htmlBefore = root.innerHTML;
-        if (/[#$%]|@\(/.test(htmlBefore)) {
+        if (/[#$%&]|\&\(/.test(htmlBefore)) {
             const htmlAfter = window.__expandShorthandString(htmlBefore);
             if (htmlAfter !== htmlBefore) {
                 root.innerHTML = htmlAfter;
@@ -877,12 +877,22 @@ function createPopupNode(x, y, ko, han) {
     if (document.getElementById(id)) return document.getElementById(id);
     const wrap = document.createElement('div');
     const _expand = s => (s || '')
-        .replace(/\\\$/g, '\uE000').replace(/\\#/g, '\uE001').replace(/\\%/g, '\uE002') // 리터럴 보호
+        // 리터럴 보호
+        .replace(/\\\$/g,'\uE000').replace(/\\#/g,'\uE001')
+        .replace(/\\%/g,'\uE002').replace(/\\&/g,'\uE003')
+
+        // 루비: &(본문|후리가나)
+        .replace(/&\(([^|)]+)\|([^)]+)\)/g, (_m, rb, rt) => `<ruby>${rb}<rt>${rt}</rt></ruby>`)
+
+        // 간단형
         .replace(/\$([^$]+)\$/g, '<span class="mid">$1</span>')
         .replace(/#([^#]+)#/g, '<span class="nano">$1</span>')
-        .replace(/#([^@]+)#/g, '<span class="micro">$1</span>')
+        .replace(/&([^&]+)&/g, '<span class="micro">$1</span>')
         .replace(/%([^%]+)%/g, '<span class="mini">$1</span>')
-        .replace(/\uE000/g, '$').replace(/\uE001/g, '#').replace(/\uE002/g, '%');
+
+        // 복원
+        .replace(/\uE000/g,'$').replace(/\uE001/g,'#')
+        .replace(/\uE002/g,'%').replace(/\uE003/g,'&');
 
     const pHan = _expand(han);
     const pKo = _expand(ko);
