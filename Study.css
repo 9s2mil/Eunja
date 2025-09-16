@@ -353,6 +353,7 @@ rt {
 .HanjaText .mini { font-size: calc(3.4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baseline;}
 .HanjaText .tiny { color: #f2c67f !important; font-size: calc(1.4em / 7.5); line-height: 1.0; font-weight: bold;}
 .HanjaText .nano { display: block; font-size: calc(1em / 7.5); line-height: 1.2; margin: 0; font-weight: bold; }
+.HanjaText .micro { display: block; font-size: calc(1.4em / 7.5); line-height: 1.2; margin: 0; font-weight: bold; }
 
 .particularText {
     color: #f5ebe2;
