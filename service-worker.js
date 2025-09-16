@@ -8,18 +8,17 @@ const FILES_TO_CACHE = [
   "Study.css",
   "Study.js",
   "title.js",
-  "title-5.json",
   "icons/icon-192.png",
   "icons/icon-512.png"
 ];
 
-// ③ fetch 핸들러: HTML/JS/CSS는 network-first, 나머지는 cache-first
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
   const isDoc = req.mode === 'navigate' || req.destination === 'document' || url.pathname.endsWith('.html');
   const isCode = ['script', 'style'].includes(req.destination) || url.pathname.endsWith('.js') || url.pathname.endsWith('.css');
+  const isJson = url.pathname.endsWith('.json');
 
   if (isDoc || isCode) {
     event.respondWith(
@@ -28,6 +27,13 @@ self.addEventListener("fetch", (event) => {
         caches.open(CACHE_NAME).then(c => c.put(req, copy));
         return res;
       }).catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  if (isJson) {
+    event.respondWith(
+      fetch(req, { cache: 'no-store' }).catch(() => caches.match(req))
     );
     return;
   }
