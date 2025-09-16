@@ -18,18 +18,21 @@ let pendingUpload = null;
         nano: 'nano',
         mini: 'mini',
         main: 'mainText',
+        micro: 'micro'
     };
 
     function escapePlaceholders(s) {
         return s
             .replace(/\\\$/g, ESC['$'])
             .replace(/\\#/g, ESC['#'])
-            .replace(/\\%/g, ESC['%']);
+            .replace(/\\%/g, ESC['%'])
+            .replace(/\\%/g, ESC['@']);
     }
     function unescapePlaceholders(s) {
         return s
             .replace(/\uE000/g, '$')
             .replace(/\uE001/g, '#')
+            .replace(/\uE001/g, '@')
             .replace(/\uE002/g, '%');
     }
     function escRe(ch) { return ch.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'); }
@@ -59,6 +62,7 @@ let pendingUpload = null;
         // 간단형 3종
         out = replacePair(out, '$', 'mid');       // $…$  → <span class="mid">
         out = replacePair(out, '#', 'main');  // #…#  → <span class="nano">
+        out = replacePair(out, '@', 'micro');  // #…#  → <span class="micro">
         out = replacePair(out, '%', 'mini');  // %…%  → <span class="minitext">
 
         return unescapePlaceholders(out);
@@ -876,7 +880,7 @@ function createPopupNode(x, y, ko, han) {
         .replace(/\\\$/g, '\uE000').replace(/\\#/g, '\uE001').replace(/\\%/g, '\uE002') // 리터럴 보호
         .replace(/\$([^$]+)\$/g, '<span class="mid">$1</span>')
         .replace(/#([^#]+)#/g, '<span class="nano">$1</span>')
-        .replace(/#([^&]+)#/g, '<span class="micro">$1</span>')
+        .replace(/#([^@]+)#/g, '<span class="micro">$1</span>')
         .replace(/%([^%]+)%/g, '<span class="mini">$1</span>')
         .replace(/\uE000/g, '$').replace(/\uE001/g, '#').replace(/\uE002/g, '%');
 
