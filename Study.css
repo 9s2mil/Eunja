@@ -348,21 +348,22 @@ rt {
     font-weight: 100;
     margin: -5vh 0;
     line-height: 1;
-}
+} /*#-nano, $-mid, %-mini, &-micro : $ > % > & > #*/
 .HanjaText .mid { color: rgb(255, 218, 200) !important; font-size: calc(4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baselin1e;}
-.HanjaText .mini { font-size: calc(3.4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baseline;}
+.HanjaText .mini { color: rgb(255, 218, 200) !important; font-size: calc(2.4em / 7.5); line-height: 1.3; display: inline-block; vertical-align: baseline; margin: 1vh 0;}
 .HanjaText .tiny { color: #f2c67f !important; font-size: calc(1.4em / 7.5); line-height: 1.0; font-weight: bold;}
-.HanjaText .nano { display: block; font-size: calc(1em / 7.5); line-height: 1.2; margin: 0; font-weight: bold; }
+.HanjaText .nano { display: block; font-size: calc(1em / 7.5); line-height: 1.3; margin: 0; font-weight: bold; }
 .HanjaText .micro { display: block; font-size: calc(1.4em / 7.5); line-height: 1.2; margin: 0; font-weight: bold; }
 
 .particularText {
     color: #f5ebe2;
     white-space: pre-line;
     font-size: 9vw;
-}
-.particularText .mini  { font-size: calc(1.4em / 2); line-height: 1.05; }
+} /*#-nano, $-mid, %-mini, &-micro : $ > % > # > &*/
+.particularText .mini  { font-size: calc(1.1em / 2); line-height: 0.8; }
 .particularText .tiny  { font-size: calc(0.64em / 2); line-height: 1.0; }
-.particularText .nano  { color: #f2c67f !important; font-size: calc(1em / 2); line-height: 0.8; }
+.particularText .micro  { color: #f2c67f !important; font-size: calc(0.80em / 2); line-height: 2!important; display: block; margin-top: 1.5em;}
+.particularText .nano  { color: #f2c67f !important; font-size: calc(1em / 2); line-height: 0.5; }
 .particularText .highlight { color: #fcbf97; font-size: 115%; }
 
 .pauseLoopButton,
