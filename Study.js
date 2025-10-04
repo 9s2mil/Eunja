@@ -478,7 +478,7 @@ function flipOpen(topicId, index = 1, side = 'f') {
 
   const t = topics.find(x => x.id === topicId);
   flipTopicName.textContent = t?.name || '새 주제';
-  flipIndexLabel.textContent = `${flipIndex}`;  // “xpopup-1-f”의 1만 표시
+  flipIndexLabel.textContent = `${flipIndex} / ${cards.length}`;  // “xpopup-1-f”의 1만 표시
 
   renderFlipCard();
 
@@ -513,6 +513,8 @@ function renderFlipCard() {
   const saved = loadFont(currentTopicId, flipIndex, flipSide);  // (B)의 함수
   flipCard.style.fontSize = saved ? `${saved}px` : '';
   updateFlipStarButton();
+
+  addEditButton(flipCard, card, flipSide, flipIndex);
 }
 // 카드 탭 → 앞/뒤 토글
 flipCard.addEventListener('click', () => {
@@ -545,7 +547,7 @@ flipPrev.addEventListener('click', () => {
   if (!cards.length) return;
   flipIndex = Math.max(1, flipIndex - 1);
   flipSide = 'f';
-  flipIndexLabel.textContent = `${flipIndex}`;
+  flipIndexLabel.textContent = `${flipIndex} / ${cards.length}`;
   renderFlipCard();
 });
 flipNext.addEventListener('click', () => {
@@ -559,7 +561,7 @@ flipNext.addEventListener('click', () => {
 
   flipIndex = next;
   flipSide = 'f';
-  flipIndexLabel.textContent = `${flipIndex}`;
+  flipIndexLabel.textContent = `${flipIndex} / ${cards.length}`;
   renderFlipCard();
 });
 
@@ -571,25 +573,36 @@ flipHomeBtn.addEventListener('click', flipCloseToHome);
 flipMoveBtn.addEventListener('click', () => {
   const cards = loadCards(currentTopicId);
   if (!cards.length) return;
-  const s = prompt(`이동할 번호(1~${cards.length})를 입력하세요`, `${flipIndex}`);
-  if (!s) return;
-  const n = Math.max(1, Math.min(cards.length, parseInt(s, 10) || flipIndex));
+
+  // 입력창 기본값을 비워둠
+  const s = prompt(`이동할 번호(1~${cards.length})를 입력하세요`, '');
+
+  // 취소 버튼 누르거나 null이면 종료
+  if (s === null) return;
+
+  // 입력이 비어있으면 1번으로 이동
+  let n;
+  if (s.trim() === '') {
+    n = 1;
+  } else {
+    n = Math.max(1, Math.min(cards.length, parseInt(s, 10) || 1));
+  }
+
   flipIndex = n;
-  flipSide = 'f'; // f로 고정
-  flipIndexLabel.textContent = `${flipIndex}`;
+  flipSide = 'f'; // 항상 f면으로 이동
+  flipIndexLabel.textContent = `${flipIndex} / ${cards.length}`;
   renderFlipCard();
 });
 
+
 flipSearchBtn.addEventListener('click', () => openSearchPrompt('flip'));
-flipHintBtn.addEventListener('click', () => showToast('힌트 기능은 후술 예정', 1200));
-flipEditBtn.addEventListener('click', () => showToast('', 1200));
 flipStar.addEventListener('click', () => {
   const on = !isStarred(currentTopicId, flipIndex);
   setStar(currentTopicId, flipIndex, on);
   if (on) addToStarOrder(currentTopicId, flipIndex);
   else removeFromStarOrder(currentTopicId, flipIndex);
   updateFlipStarButton();
-  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 1000);
+  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 600);
 });
 
 // ===== 휘장 모드  ===== 
@@ -604,7 +617,7 @@ function curtainOpen(topicId, index = 1) {
 
   const t = topics.find(x => x.id === topicId);
   curTopicName.textContent = t?.name || '새 주제';
-  curIndexLabel.textContent = `${curtainIndex}`;
+  curIndexLabel.textContent = `${curtainIndex} / ${cards.length}`;
 
   renderCurtainCard();
   ensureCurtainVisible(); 
@@ -644,6 +657,8 @@ function renderCurtainCard() {
   curTopText.style.fontSize = topPx ? `${topPx}px` : '';
   curBottomText.style.fontSize = botPx ? `${botPx}px` : '';
   updateCurtainStarButton();
+  addEditButton(curTopText, cards, 'f', curtainIndex);
+  addEditButton(curBottomText, cards, 'b', curtainIndex);
 }
 function ensureCurtainVisible() {
   if (curCurtain) curCurtain.style.display = 'block';
@@ -655,20 +670,38 @@ curHomeBtn.addEventListener('click', curtainCloseToHome);
 curMoveBtn.addEventListener('click', () => {
   const cards = loadCards(currentTopicId);
   if (!cards.length) return;
-  const s = prompt(`이동할 번호(1~${cards.length})`, `${curtainIndex}`);
-  if (!s) return;
-  const n = Math.max(1, Math.min(cards.length, parseInt(s, 10) || curtainIndex));
+
+  // 입력창 기본값을 비워둠 (사용자가 직접 입력하도록)
+  const s = prompt(`이동할 번호(1~${cards.length})`, '');
+
+  // 취소 누르면 종료
+  if (s === null) return;
+
+  // 비어있으면 1번으로 이동
+  let n;
+  if (s.trim() === '') {
+    n = 1;
+  } else {
+    const parsed = parseInt(s, 10);
+    if (Number.isNaN(parsed)) {
+      showToast('유효한 번호를 입력하세요', 1200);
+      return;
+    }
+    n = Math.max(1, Math.min(cards.length, parsed));
+  }
+
   curtainIndex = n;
-  curIndexLabel.textContent = `${curtainIndex}`;
+  curIndexLabel.textContent = `${curtainIndex} / ${cards.length}`;
   renderCurtainCard();
   ensureCurtainVisible();
 });
+
 
 // 좌/우 네비 (항상 번호만 바꾸고 표시는 t/b 그대로)
 curPrev.addEventListener('click', () => {
   const cards = loadCards(currentTopicId); if (!cards.length) return;
   curtainIndex = Math.max(1, curtainIndex - 1);
-  curIndexLabel.textContent = `${curtainIndex}`;
+  curIndexLabel.textContent = `${curtainIndex} / ${cards.length}`;
   renderCurtainCard();
   ensureCurtainVisible();
 });
@@ -681,7 +714,7 @@ curNext.addEventListener('click', () => {
     : Math.min(cards.length, curtainIndex + 1);
 
   curtainIndex = next;
-  curIndexLabel.textContent = `${curtainIndex}`;
+  curIndexLabel.textContent = `${curtainIndex} / ${cards.length}`;
   renderCurtainCard();
   ensureCurtainVisible(); // 전환 시 휘장 반드시 보이게
 });
@@ -734,7 +767,7 @@ curStar.addEventListener('click', () => {
   if (on) addToStarOrder(currentTopicId, curtainIndex);
   else removeFromStarOrder(currentTopicId, curtainIndex);
   updateCurtainStarButton();
-  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 1000);
+  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 600);
 });
 
 // ===== 암기 모드 =====  
@@ -746,7 +779,7 @@ function memoryOpen(topicId, index = 1) {
   memoryIndex = Math.max(1, Math.min(index | 0, cards.length));
   const t = topics.find(x => x.id === topicId);
   memTopicName.textContent = t?.name || '새 주제';
-  memIndexLabel.textContent = `${memoryIndex}`;
+  memIndexLabel.textContent = `${memoryIndex} / ${cards.length}`;
   renderMemoryCard();
 
   // 화면 전환
@@ -774,9 +807,16 @@ function renderMemoryCard() {
   // 질문 = f (xpopup-i-q)
   memQuestion.textContent = qCard.f || '';
 
+  // ✏️ 수정 버튼 추가 (질문 부분에만)
+  addEditButton(memQuestion, qCard, 'f', memoryIndex);
+
   // 보기 데이터 구성
-  const correctIdx = memoryIndex;      // 정답의 원본 인덱스
-  const distractorIdxs = pickRandomInts(total, correctIdx, Math.min(3, Math.max(0, total - 1)));
+  const correctIdx = memoryIndex; // 정답의 원본 인덱스
+  const distractorIdxs = pickRandomInts(
+    total,
+    correctIdx,
+    Math.min(3, Math.max(0, total - 1))
+  );
   const optionIdxs = [correctIdx, ...distractorIdxs];
 
   // 랜덤 섞기
@@ -790,17 +830,20 @@ function renderMemoryCard() {
   optionIdxs.forEach((idx) => {
     const opt = document.createElement('div');
     opt.className = 'mem-opt';
-    opt.dataset.idx = String(idx);        // 폰트 저장/검증용 원본 인덱스
+    opt.dataset.idx = String(idx);
 
     const text = document.createElement('div');
     text.className = 'mem-opt__text';
-    text.textContent = cards[idx - 1]?.b || '';    // 각 보기 텍스트 = 해당 카드의 a
+    text.textContent = cards[idx - 1]?.b || '';
 
     // 저장된 폰트 크기 복원
     const savedPx = loadFont(currentTopicId, idx, 'a');
     if (savedPx) text.style.fontSize = `${savedPx}px`;
 
-    // 우측 +/-
+    // ✏️ 각 보기에도 수정 버튼 부여 (선택 사항)
+    addEditButton(text, cards[idx - 1], 'b', idx);
+
+    // 우측 폰트 +/- 버튼
     const col = document.createElement('div');
     col.className = 'mem-opt__control';
     const plus = document.createElement('button');
@@ -815,7 +858,7 @@ function renderMemoryCard() {
       const cur = parseFloat(getComputedStyle(text).fontSize);
       const next = Math.min((cur || 18) + 2, 96);
       text.style.fontSize = `${next}px`;
-      saveFont(currentTopicId, idx, 'a', next);  // ← idx(원본) 기준으로 저장
+      saveFont(currentTopicId, idx, 'a', next);
     });
     minus.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -825,9 +868,10 @@ function renderMemoryCard() {
       saveFont(currentTopicId, idx, 'a', next);
     });
 
-    col.appendChild(plus); col.appendChild(minus);
+    col.appendChild(plus);
+    col.appendChild(minus);
 
-    // 옵션 클릭 → 정답 판정
+    // 클릭 → 정답 판정
     opt.addEventListener('click', () => {
       const chosenIdx = parseInt(opt.dataset.idx, 10);
       if (chosenIdx === correctIdx) {
@@ -845,6 +889,7 @@ function renderMemoryCard() {
     opt.appendChild(col);
     memOptions.appendChild(opt);
   });
+
   updateMemoryStarButton();
 }
 
@@ -857,7 +902,7 @@ memHomeBtn.addEventListener('click', () => {
 memPrev.addEventListener('click', () => {
   const cards = loadCards(currentTopicId); if (!cards.length) return;
   memoryIndex = Math.max(1, memoryIndex - 1);
-  memIndexLabel.textContent = `${memoryIndex}`;
+  memIndexLabel.textContent = `${memoryIndex} / ${cards.length}`;
   renderMemoryCard();
 });
 memNext.addEventListener('click', () => {
@@ -869,20 +914,39 @@ memNext.addEventListener('click', () => {
     : Math.min(cards.length, memoryIndex + 1);
 
   memoryIndex = next;
-  memIndexLabel.textContent = `${memoryIndex}`;
+  memIndexLabel.textContent = `${memoryIndex} / ${cards.length}`;
   renderMemoryCard();
 });
 
-
+// Move(m): 번호로 점프 (암기 모드)
 memMoveBtn.addEventListener('click', () => {
-  const cards = loadCards(currentTopicId); if (!cards.length) return;
-  const s = prompt(`이동할 번호(1~${cards.length})`, `${memoryIndex}`);
-  if (!s) return;
-  const n = Math.max(1, Math.min(cards.length, parseInt(s, 10) || memoryIndex));
+  const cards = loadCards(currentTopicId);
+  if (!cards.length) return;
+
+  // 입력창 기본값 비워둠
+  const s = prompt(`이동할 번호(1~${cards.length})`, '');
+
+  // 취소 시 종료
+  if (s === null) return;
+
+  // 비어있으면 1번으로 이동
+  let n;
+  if (s.trim() === '') {
+    n = 1;
+  } else {
+    const parsed = parseInt(s, 10);
+    if (Number.isNaN(parsed)) {
+      showToast('유효한 번호를 입력하세요', 1200);
+      return;
+    }
+    n = Math.max(1, Math.min(cards.length, parsed));
+  }
+
   memoryIndex = n;
-  memIndexLabel.textContent = `${memoryIndex}`;
+  memIndexLabel.textContent = `${memoryIndex} / ${cards.length}`;
   renderMemoryCard();
 });
+
 
 // 자리만
 memSearchBtn.addEventListener('click', () => openSearchPrompt('memory'));
@@ -892,7 +956,7 @@ memStar.addEventListener('click', () => {
   if (on) addToStarOrder(currentTopicId, memoryIndex);
   else removeFromStarOrder(currentTopicId, memoryIndex);
   updateMemoryStarButton();
-  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 1000);
+  showToast(on ? '북마크에 추가되었습니다' : '북마크에서 제거되었습니다', 600);
 });
 
 // ===== 렌더링 =====
@@ -923,11 +987,14 @@ function render() {
       // 업로드 타깃 선택 모드
       if (awaitingUploadTarget && pendingUploadCards) {
         const topicId = t.id;
-        saveCards(topicId, pendingUploadCards);
+        const oldCards = loadCards(topicId);          // 기존 카드 불러오기
+        const newCards = pendingUploadCards || [];    // 방금 업로드한 카드
+        const merged = oldCards.concat(newCards);     // 기존 + 새거 합치기
+        saveCards(topicId, merged);    
         showToast(`업로드 완료: ${pendingUploadCards.length}개`, 1500);
         awaitingUploadTarget = false;
         pendingUploadCards = null;
-        flipOpen(topicId, 1, 'f'); // 업로드 후 1-f 자동 오픈
+        flipOpen(topicId, 1, 'f'); // 업로드 후 해당 디테일 뷰 열기로 바꾸기
         return;
       }
 
@@ -1435,7 +1502,7 @@ function updateRandUI(mode, topicId) {
   const btn = document.getElementById(id);
   const on = _rs(mode, topicId).on;
   if (btn) {
-    btn.textContent = on ? 'R*' : 'R';   // 켜짐 표시
+    btn.textContent = on ? '🔀*' : '🔀';   // 켜짐 표시
     btn.classList.toggle('chip-on', on); // (선택) 스타일 훅
   }
 }
@@ -1684,8 +1751,291 @@ attachSwipeNav(
   () => curNext && curNext.click()
 );
 
+document.getElementById("invertButton").addEventListener("click", () => {
+  document.body.classList.toggle("inverted-mode");
+});
+
+// === 수정 팝업 ===
+let editingIndex = null;
+
+function openEditPopup(index) {
+  const cards = loadCards(currentTopicId);
+  editingIndex = index;
+  const card = cards[index];
+  const content = card.f || card.t || card.q || '';
+  document.getElementById('editInput').value = content;
+  document.getElementById('editPopup').style.display = 'flex';
+  document.body.classList.add('naming-open');
+}
+
+document.getElementById('editCancelBtn').onclick = () => {
+  document.getElementById('editPopup').style.display = 'none';
+  document.body.classList.remove('naming-open');
+};
+
+document.getElementById('editSaveBtn').onclick = () => {
+  const cards = loadCards(currentTopicId);
+  if (editingIndex == null || !cards[editingIndex]) return;
+  const newText = document.getElementById('editInput').value.trim();
+
+  // f/b/t/u/q 중 존재하는 키를 자동 감지해서 수정
+  const c = cards[editingIndex];
+  for (const k of ['f', 'b', 't', 'u', 'q']) {
+    if (c[k] !== undefined) c[k] = newText;
+  }
+
+  saveCards(currentTopicId, cards);
+  document.getElementById('editPopup').style.display = 'none';
+  document.body.classList.remove('naming-open');
+  showToast('수정 완료', 1500);
+
+  // 현재 모드 재렌더
+  if (document.getElementById('flipScreen').style.display !== 'none') renderFlipCard();
+  if (document.getElementById('curtainScreen').style.display !== 'none') renderCurtainCard();
+  if (document.getElementById('memoryScreen').style.display !== 'none') renderMemoryCard();
+};
+
+function addEditButton(container, card, side, index) {
+  // 이미 버튼이 있다면 중복 방지
+  const existing = container.querySelector('.edit-btn');
+  if (existing) return;
+
+  const btn = document.createElement('button');
+  btn.textContent = '💎';
+  btn.className = 'edit-btn';
+  btn.style.position = 'absolute';
+  btn.style.left = '8px';
+  btn.style.top = '8px';
+  btn.style.zIndex = '10';
+  btn.style.background = 'transparent';
+  btn.style.border = 'none';
+  btn.style.cursor = 'pointer';
+
+  btn.addEventListener('click', () => {
+    const newText = prompt('이 텍스트를 수정하십시오:', card[side] || '');
+    if (newText === null) return;
+    card[side] = newText;
+    saveCards(currentTopicId, cards); // 로컬 스토리지 반영
+    renderFlipCard(); // 다시 그리기
+  });
+
+  container.style.position = 'relative';
+  container.appendChild(btn);
+}
+
+// ⚙️ 설정 팝업 토글
+const profileBtn = document.querySelector(".fab");
+const settingsPopup = document.getElementById("settingsPopup");
+
+profileBtn.addEventListener("click", () => {
+  settingsPopup.classList.toggle("active");
+});
+
+// 팝업 바깥 클릭 시 닫기
+document.addEventListener("click", (e) => {
+  if (!settingsPopup.contains(e.target) && !profileBtn.contains(e.target)) {
+    settingsPopup.classList.remove("active");
+  }
+});
+
+// 🔄 리셋 버튼
+document.getElementById("popupResetBtn").addEventListener("click", () => {
+  if (confirm("정말 모든 데이터를 초기화할까요?")) {
+    localStorage.clear();
+    alert("로컬 데이터가 모두 삭제되었습니다.");
+    location.reload();
+  }
+});
+
+// ☯ 반전 버튼 (토글 + 저장)
+document.getElementById("popupInvertBtn").addEventListener("click", () => {
+  document.body.classList.toggle("inverted-mode");
+  const state = document.body.classList.contains("inverted-mode");
+  localStorage.setItem("invertedMode", state);
+});
+
+// 💾 로컬 사용량 확인 버튼
+document.getElementById("popupStorageBtn").addEventListener("click", () => {
+  const used = new Blob(Object.values(localStorage)).size;
+  const limit = 5 * 1024 * 1024; // 약 5MB
+  const percent = ((used / limit) * 100).toFixed(2);
+  const remaining = (limit - used).toLocaleString();
+
+  const msg = `📦 사용량: ${(used / 1024).toFixed(1)}KB (${percent}%)\n남은 용량: ${remaining} bytes`;
+  showToast(msg);
+});
+
+// 💬 간단한 토스트 함수
+function showTransientToast(message, ms = 2000) {
+  if (typeof window.showToast === 'function' && window.showToast !== showTransientToast) {
+    try { window.showToast(message, ms); return; } catch (e) { /* 위임 실패: 계속 진행 */ }
+  }
+  let t = document.createElement('div');
+  t.textContent = message;
+  t.style.position = 'fixed';
+  t.style.bottom = '20px';
+  t.style.left = '50%';
+  t.style.transform = 'translateX(-50%)';
+  t.style.background = 'rgba(0,0,0,0.8)';
+  t.style.color = '#fff';
+  t.style.padding = '10px 18px';
+  t.style.borderRadius = '8px';
+  t.style.fontSize = '14px';
+  t.style.zIndex = '3000';
+  t.style.width = '80vw';
+  t.style.whiteSpace = 'pre-line';
+  t.style.pointerEvents = 'none';
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), ms);
+}
+
+// === 백업(토픽 선택 → txt 생성) 기능 추가 ===
+// 상태 변수
+let awaitingBackupSelection = false;
+let _backupTimer = null;
+
+// 유틸: 파일 다운로드
+function downloadText(filename, text) {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+// === (교체할) 백업 텍스트 생성: 간략형 b;f, 줄바꿈 -> @, 헤더 없음 ===
+
+// 안전한 파일명(토픽명만 사용). 특수문자 제거, 공백 -> _
+function safeFileName(s) {
+  return String(s || 'topic').replace(/[\\/:*?"<>|]+/g, '_').trim().replace(/\s+/g, '_');
+}
+
+// 한 필드(예: b 또는 f)의 내부 줄바꿈을 '@'로 바꿔주는 유틸
+function normalizeFieldText(raw) {
+  if (raw == null) return '';
+  // CRLF, CR, LF 모두 처리
+  let t = String(raw);
+  // 줄바꿈 연속은 한 개의 @ 로 대체 (연속 줄바꿈을 유지할 필요 없으므로)
+  t = t.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
+  // 줄바꿈을 '@'로 변환
+  t = t.split('\n').map(s => s.trim()).filter(s => s.length > 0).join('@');
+  return t;
+}
+
+// 토픽의 카드 데이터를 간단한 "b;f" 리스트로 만듦
+function makeBackupTextForTopic(topicId) {
+  const t = topics.find(x => x.id === topicId);
+  const cards = loadCards(topicId) || [];
+  let lines = [];
+
+  cards.forEach((c) => {
+    // 업로드/내부 구조에 따라 플립(front/back)의 키명을 확인.
+    // 기존 프로젝트에서 'f'가 front(앞면), 'b'가 back(뒷면)이라 가정함.
+    // 사용자 요청대로 "백(b)"을 앞쪽에, "프론트(f)"를 뒤쪽에 둔다.
+    const backRaw = c.b != null ? c.b : (c.back != null ? c.back : '');
+    const frontRaw = c.f != null ? c.f : (c.front != null ? c.front : '');
+
+    const back = normalizeFieldText(backRaw);
+    const front = normalizeFieldText(frontRaw);
+
+    // 둘 다 비어있으면 해당 카드는 건너뜀
+    if (!back && !front) return;
+
+    // b;f 형식 (둘 중 하나만 있으면 빈칸 대신 빈 문자열)
+    lines.push(`${back};${front}`);
+  });
+
+  // 각 카드 라인 사이에는 줄바꿈 하나만 넣음
+  return lines.join('\n');
+}
+
+// 백업 모드 시작: 5초 동안 메인 화면에서 토픽 선택 허용
+function startBackupSelectionWindow(timeoutMs = 5000) {
+  // 이미 대기 중이면 재시작(타이머 리셋)
+  awaitingBackupSelection = true;
+  // 닫기: 설정 팝업 닫아주기
+  settingsPopup.classList.remove('active');
+
+  showToast('백업할 주제를 선택하세요', 3000);
+
+  clearTimeout(_backupTimer);
+  _backupTimer = setTimeout(() => {
+    // 타임아웃: 대기 상태 해제하고 설정 팝업 다시 열기
+    awaitingBackupSelection = false;
+    settingsPopup.classList.add('active');
+    showToast('백업 선택 시간이 만료되어 설정을 다시 엽니다', 1500);
+  }, timeoutMs);
+}
+
+// 백업 취소(선택 완료 또는 강제 취소)
+function cancelBackupSelection() {
+  awaitingBackupSelection = false;
+  clearTimeout(_backupTimer);
+  _backupTimer = null;
+}
+
+// 팝업의 백업 버튼 연결 (index.html에 추가된 id: popupBackupBtn 이어야 함)
+const popupBackupBtn = document.getElementById('popupBackupBtn');
+if (popupBackupBtn) {
+  popupBackupBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    startBackupSelectionWindow(5000); // 5초
+  });
+}
+
+// 메인 화면(토픽 리스트)에서 클릭을 감지하여 백업 모드일 때 처리
+// topicWrap은 토픽 버튼들을 포함하나, bookmarkBtn은 제외해야 함
+const topicWrapEl = document.getElementById('topicWrap');
+if (topicWrapEl) {
+  topicWrapEl.addEventListener('click', (e) => {
+    if (!awaitingBackupSelection) return;
+
+    e.stopPropagation();    // 이벤트 전파 방지
+    e.preventDefault();     // 기본 동작(뷰 이동) 방지
+
+    const topicEl = e.target.closest('.topic');
+    if (!topicEl) return;
+
+    const tidAttr = topicEl.dataset && topicEl.dataset.id ? topicEl.dataset.id : null;
+    let selectedTopicId = tidAttr ? (isNaN(tidAttr) ? tidAttr : Number(tidAttr)) : null;
+
+    if (selectedTopicId == null) {
+      const nameNode = topicEl.querySelector('.topic__name') || topicEl;
+      const name = (nameNode && nameNode.textContent) ? nameNode.textContent.trim() : null;
+      if (name) {
+        const found = topics.find(x => (x.name || '').trim() === name);
+        if (found) selectedTopicId = found.id;
+      }
+    }
+
+    if (selectedTopicId == null) {
+      showToast('선택된 주제를 식별할 수 없습니다', 1500);
+      return;
+    }
+
+    // 선택된 주제로 백업 수행
+    cancelBackupSelection();
+
+    const t = topics.find(x => x.id === selectedTopicId); // ← 추가
+    const text = makeBackupTextForTopic(selectedTopicId);
+    const topicName = t ? (t.name || 'topic') : String(selectedTopicId);
+    const fname = `${safeFileName(topicName)}.txt`;
+    downloadText(fname, text);
+    showToast('백업 파일을 생성하였습니다', 1600);
+  });
+
+}
+
 // ===== 초기화 =====
 loadState();
 render();
 document.getElementById('curTopText')?.classList.add('cur-text');
 document.getElementById('curBottomText')?.classList.add('cur-text');
+window.addEventListener("DOMContentLoaded", () => {
+  const savedState = localStorage.getItem("invertedMode") === "true";
+  if (savedState) document.body.classList.add("inverted-mode");
+});

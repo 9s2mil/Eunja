@@ -13,9 +13,9 @@
 
     <!-- ▼ 메인 화면 -->
     <div class="screen" id="screen">
-
       <button id="resetBtn" class="icon-btn reset">🔄</button>
-      <button class="fab" aria-label="프로필"></button>
+      <button id="invertButton" class="icon-btn reset">☯</button>
+      <button class="fab">⚙️</button>
 
       <!-- 중앙 주제 목록 -->
       <div id="topicWrap" class="topic-wrap">
@@ -37,8 +37,8 @@
     
       <div class="flip-toolbar">
         <div class="spacer"></div>
-        <button id="starFontPlus" class="chip">+</button>
-        <button id="starFontMinus" class="chip">-</button>
+        <button id="starFontPlus" class="chip">➕</button>
+        <button id="starFontMinus" class="chip">➖</button>
       </div>
     
       <div id="starCard" class="flip-card" role="button" aria-label="카드 토글(앞/뒤)"></div>
@@ -52,14 +52,13 @@
 
     <!-- ▼ 새 뷰: 토픽 상세/모드 선택 화면 -->
     <div id="detailScreen" class="screen" style="display:none;">
-      <button class="fab" aria-label="프로필" style="display: block;"></button>
 
       <div class="detail-wrap">
         <div id="detailTitle" class="input-like">아까 누른 버튼 텍스트</div>
         <br>
         <button id="detailFlipBtn" class="mode-btn">플립 모드</button>
         <button id="detailCurtBtn" class="mode-btn">휘장 모드</button>
-        <button id="detailMemoryBtn" class="mode-btn">암기 모드</button>
+        <button id="detailMemoryBtn" class="mode-btn">퀴즈 모드</button>
       </div>
 
       <div class="detail-home">
@@ -81,16 +80,16 @@
     
       <!-- 툴바 -->
       <div class="flip-toolbar">
-        <button id="flipHint" class="chip">hint</button>
-        <button id="flipHintBtn" class="chip" style="display: none;">hint</button>
+        <button id="flipHint" class="chip">💡</button>
+        <button id="flipHintBtn" class="chip" style="display: none;">💡</button>
         <button id="flipEditBtn" class="chip" style="display: none;">연필</button>
         <div class="spacer"></div>
-        <button id="flipRandBtn" class="chip">R</button>
-        <button id="flipMoveBtn" class="chip">m</button>
-        <button id="flipSearchBtn" class="chip">s</button>
-        <button id="flipAutoBtn" class="chip">a</button>
-        <button id="flipFontPlus" class="chip">+</button>
-        <button id="flipFontMinus" class="chip">-</button>
+        <button id="flipRandBtn" class="chip">🔀</button>
+        <button id="flipMoveBtn" class="chip">🡺</button>
+        <button id="flipSearchBtn" class="chip">🔎</button>
+        <button id="flipAutoBtn" class="chip">🤖</button>
+        <button id="flipFontPlus" class="chip">➕</button>
+        <button id="flipFontMinus" class="chip">➖</button>
       </div>
     
       <!-- 카드 표시 영역 -->
@@ -120,36 +119,43 @@
     
       <!-- 툴바: hint / 연필 / 빙(휘장 투명 토글) -->
       <div class="flip-toolbar">
-        <button id="curHint" class="chip">hint</button>
-        <button id="curHintBtn" class="chip" style="display: none;">hint</button>
+        <button id="curHint" class="chip">💡</button>
+        <button id="curHintBtn" class="chip" style="display: none;">💡</button>
         <button id="curEditBtn" class="chip" style="display: none;">연필</button>
-        <button id="curOpacityBtn" class="chip">빙</button>
+        <button id="curOpacityBtn" class="chip">🧊</button>
         <div class="spacer"></div>
-        <button id="curRandBtn" class="chip">R</button>
-        <button id="curMoveBtn" class="chip">m</button>
-        <button id="curSearchBtn" class="chip">s</button>
-        <button id="curAutoBtn" class="chip">a</button>
+        <button id="curRandBtn" class="chip">🔀</button>
+        <button id="curMoveBtn" class="chip">🡺</button>
+        <button id="curSearchBtn" class="chip">🔎</button>
+        <button id="curAutoBtn" class="chip">🤖</button>
       </div>
     
       <!-- 본문: 위/아래 1:1, 오른쪽에 각각 폰트 ± -->
       <div id="curBody" class="cur-body">
         <div class="cur-top" id="curTopArea">
           <div id="curTopText" class="cur-text">top</div>
-          <div class="cur-fontcol">
-            <button id="curTopPlus" class="chip">+</button>
-            <button id="curTopMinus" class="chip">-</button>
+
+          <!-- 위쪽 버튼 세트 -->
+          <div class="cur-fontcol cur-fontcol-top">
+            <div class="font-group top-group">
+              <button id="curTopPlus" class="chip">➕</button>
+              <button id="curTopMinus" class="chip">➖</button>
+            </div>
           </div>
-        </div>
-    
+
+          <!-- 아래쪽 버튼 세트 -->
+          <div class="cur-fontcol cur-fontcol-bottom">
+            <div class="font-group bottom-group">
+              <button id="curBottomPlus" class="chip">➕</button>
+              <button id="curBottomMinus" class="chip">➖</button>
+            </div>
+          </div>
+        </div> 
         <div class="cur-bottom" id="curBottomArea">
           <div id="curBottomText" class="cur-text">bottom</div>
-    
           <!-- 노란 휘장: under 영역을 덮는 오버레이 -->
           <div id="curCurtain" class="cur-curtain"></div>
-    
           <div class="cur-fontcol cur-fontcol-bottom">
-            <button id="curBottomPlus" class="chip">+</button>
-            <button id="curBottomMinus" class="chip">-</button>
           </div>
         </div>
       </div>
@@ -162,7 +168,7 @@
       </div>
     </div>
 
-    <!-- ▼ 암기 모드 화면 -->
+    <!-- ▼ 퀴즈 모드 화면 -->
     <div id="memoryScreen" class="screen" style="display:none;">
       <div class="flip-header">
         <div class="hometext" id="memTopicName">토픽 버튼 텍스트</div>
@@ -173,13 +179,13 @@
       </div>
     
       <div class="mem-stats">
-        <button id="memHint" class="chip">Hint</button>
+        <button id="memHint" class="chip">💡</button>
         정답 개수: <b id="memCorrectCount">0</b>
         <div class="spacer"></div>
-        <button id="memRandBtn" class="chip">R</button>
-        <button id="memMoveBtn" class="chip">m</button>
-        <button id="memSearchBtn" class="chip">s</button>
-        <button id="memAutoBtn" class="chip">a</button>
+        <button id="memRandBtn" class="chip">🔀</button>
+        <button id="memMoveBtn" class="chip">🡺</button>
+        <button id="memSearchBtn" class="chip">🔎</button>
+        <button id="memAutoBtn" class="chip">🤖</button>
       </div>
 
       <div class="mem-wrap">
@@ -203,13 +209,21 @@
     <!-- 하단 3버튼 -->
     <div class="bottom" role="toolbar" aria-label="하단 조작">
       <button id="upBtn"  class="btn" aria-label="업로드" style="font-size: 1.2em !important;">⬆</button>
-      <button id="addBtn" class="btn btn-primary" aria-label="추가">+</button>
-      <button id="delBtn" class="btn btn-danger"  aria-label="삭제">-</button>
+      <button id="addBtn" class="btn btn-primary" aria-label="추가">➕</button>
+      <button id="delBtn" class="btn btn-danger"  aria-label="삭제">➖</button>
     </div>
   </div>
 
-  <!-- 토스트 -->
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <!-- 설정 팝업 -->
+  <div id="settingsPopup" class="popup settings-popup">
+    <div class="popup-content">
+      <h2>⚙️ 설정</h2>
+      <button id="popupResetBtn" class="btn">🔄 모든 데이터 초기화</button>
+      <button id="popupInvertBtn" class="btn">☯ 색 반전 모드</button>
+      <button id="popupStorageBtn" class="btn">💾 로컬 사용량 확인</button>
+      <button id="popupBackupBtn" class="btn">💾 백업</button>
+    </div>
+  </div>
 
   <!-- 이름 편집 팝업 -->
   <div id="namingPopup" class="namingPopup" style="display:none;">
@@ -222,6 +236,21 @@
       </div>
     </div>
   </div>
+
+  <!-- 공통 수정 팝업 -->
+  <div id="editPopup" class="namingPopup" style="display:none;">
+    <div class="namingPopup__panel">
+      <div class="namingPopup__title">카드 내용 수정</div>
+      <textarea id="editInput" class="namingPopup__input" rows="4"></textarea>
+      <div class="namingPopup__actions">
+        <button id="editCancelBtn" class="btn">취소</button>
+        <button id="editSaveBtn" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="Study.js"></script>
   <script>

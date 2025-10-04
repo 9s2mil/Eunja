@@ -16,7 +16,7 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:"Pretendard
 .screen{ position:relative; flex:1; background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden }
 
 /* === Main header & common buttons === */
-.fab{ position:absolute; top:12px; right:12px; width:44px; height:44px; border-radius:999px; border:2px solid var(--line); background-image:none; background-size:cover; background-position:center; background-repeat:no-repeat; }
+.fab{ position:absolute; top:12px; right:12px; width:44px; height:44px; font-size: 1em; border-radius:999px; border:2px solid var(--line); background-color: #2e2400; }
 #resetBtn{ margin-right:auto }
 #bookmarkBtn{ width:100%; border:2px solid var(--gold); background:linear-gradient(180deg, var(--scarlet-top) 0%, var(--scarlet-bot) 100%); color:#fff; border-radius:12px; padding:12px 14px; font-weight:600; box-shadow:0 6px 12px rgba(0,0,0,.22); display:flex; align-items:center; justify-content:center; text-align:center; min-height:56px }
 
@@ -92,7 +92,7 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 .flip-header{ display:grid; grid-template-columns:1fr auto auto; gap:8px; padding:12px 12px 0; align-items:center; }
 .flip-topic{ border:1px solid var(--line); background:var(--surface-2); padding:8px 10px; border-radius:8px; font-size:14px }
 .flip-meta{ display:flex; align-items:center; gap:6px }
-.chip{ display:inline-flex; align-items:center; justify-content:center; height:40px; padding:0 12px; min-width:40px; border-radius:12px; border:2px solid var(--gold); background-color: #aaa; color:#fff; font-size:16px; font-weight:800; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.35); box-shadow:0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15); transition:transform .08s ease, box-shadow .08s ease, filter .08s ease }
+.chip{ display:inline-flex; align-items:center; justify-content:center; height:40px; padding:0 12px; min-width:40px; border-radius:12px; border:2px solid var(--gold); background-color: rgba(0, 0, 0, 0); color:#fff; font-size:16px; font-weight:800; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.35); box-shadow:0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15); transition:transform .08s ease, box-shadow .08s ease, filter .08s ease }
 .chip:hover{ filter:saturate(1.06) }
 .chip:active{ transform:translateY(2px); box-shadow:0 6px 12px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.1) }
 .chip:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(226,190,58,.28), 0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15) }
@@ -112,15 +112,28 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 #flipScreen .flip-bottom .btn.star-on{ color:var(--gold); text-shadow:0 0 10px rgba(226,190,58,.45) }
 
 /* === Curtain screen === */
-#curtainScreen{ display:flex; flex-direction:column }
-.cur-body{ position:relative; flex:1; display:flex; flex-direction:column; gap:10px; padding:10px 12px 80px }
-.cur-top, .cur-bottom{ display:grid; place-items:center; position:relative; border:1px solid var(--line); background:var(--surface-2); border-radius:10px; flex:1; min-height:0; overflow:auto; padding:12px }
+#curtainScreen{ display:flex; flex-direction:column; height: 100%;}
+.cur-body{flex:1;display:flex;flex-direction:column;gap:10px;padding:10px 12px 80px;height:100%}
+.cur-top,.cur-bottom{ flex: 1; display:flex;align-items:center;justify-content:center;position:relative;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;flex:1 1 50%;min-height:0;overflow:hidden;padding:12px}
 #curtainScreen #curTopText, #curtainScreen #curBottomText{ flex:1; min-height:0; height:100%; display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.45; }
 .cur-text{ height:100%; width:100%; display:flex; align-items:center; justify-content:center; text-align:center; word-break:keep-all; line-height:1.45; font-size:22px }
-.cur-fontcol{ position:absolute; right:6px; top:6px; display:flex; flex-direction:column; gap:6px }
-.cur-fontcol-bottom{ top:auto; bottom:6px }
-.cur-curtain{ position:absolute; inset:0; background:rgba(255,235,59,1); border-radius:10px; z-index:2; pointer-events:none }
-.cur-curtain.transparent{ background:rgba(255,235,59,0) }
+.cur-fontcol{ position:absolute; display:flex; flex-direction:column; gap:6px }
+.cur-fontcol-top { top:6px; right: 6px;}
+.cur-fontcol-bottom{ top:auto; left: 6px; bottom:6px }
+.cur-curtain { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+
+  /* ▼ 네 .gid 디자인 반영 */
+  background: linear-gradient(to top, #8B0000, #B22222, #3e1f28) !important;
+  border: 5px solid #d4af37 !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5) !important;
+  box-sizing: border-box;
+  border-radius: 0;                  /* 휘장 전체 덮이도록 둥근 모서리 제거 */
+  transition: opacity 0.3s ease, background 0.3s ease;
+
+  /* 투명화 상태 대비 (기존 투명 모드 대응용) */
+  opacity: 1;
+}
+.cur-curtain.transparent { background: linear-gradient(to top, rgba(139,0,0,0), rgba(178,34,34,0), rgba(62,31,40,0)); opacity: 0; }
 
 /* === Memory screen === */
 #memoryScreen{ display:flex; flex-direction:column }
@@ -133,8 +146,8 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 .mem-opt__text{ flex:1; text-align:center; word-break:keep-all }
 .mem-opt__control{ display:flex; flex-direction:column; gap:6px }
 .mem-opt__btn{ border:1px solid var(--line); background:var(--surface); padding:6px 10px; border-radius:8px }
-.mem-opt.correct{ outline:2px solid #2ecc71 }
-.mem-opt.wrong{ outline:2px solid #e74c3c }
+.mem-opt.correct{ outline:3px solid #2ecc71 }
+.mem-opt.wrong{ outline:3px solid #e74c3c }
 
 /* === Top Home buttons === */
 #flipHomeBtn,#starHomeBtn,#curHomeBtn,#memHomeBtn{height:40px;border-radius:10px;border:3px solid var(--gold);background:linear-gradient(180deg,#FFE08A 0%,#F9D66B 100%);color:#1E1F22;font-weight:800;letter-spacing:.2px;text-shadow:none;box-shadow:0 12px 22px rgba(0,0,0,.16),inset 0 2px 0 rgba(255,255,255,.25);transition:transform .08s ease,box-shadow .08s ease,filter .08s ease}
@@ -149,7 +162,7 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 /* === Icon buttons === */
 .icon-btn{ position:absolute; width:44px; height:44px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; border:none; background:rgba(0,0,0,0); color:var(--text); font-size:2em; line-height:1; user-select:none }
 .icon-btn:active{ transform:scale(.98) }
-.icon-btn.reset{ top:12px; left:12px; z-index:10 }
+.icon-btn.reset{ top:12px; left:12px; z-index:10; display: none; }
 
 /* Flip & Bookmark unified look */
 #flipScreen,#starScreen{position:relative;display:flex;flex-direction:column;height:100%}
@@ -198,7 +211,6 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 /* 가운데(별) 버튼은 항상 다크 그레이 그라데이션 */
 #flipStar, #curStar, #memStar, #starStar{
   background:linear-gradient(180deg, #4a4a4a 0%, #2b2b2b 100%) !important;
-  color:#eee !important;
   text-shadow:0 1px 2px rgba(0,0,0,.35);
   box-shadow:0 10px 18px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.08);
 }
@@ -245,3 +257,85 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 #starScreen .mem-q { font-size: var(--content-font) }
 
 #memoryScreen .mem-opt__text, #starScreen .mem-opt__text { font-size: 1.4em; }
+
+#curtainScreen { display: flex; flex-direction: column; height: 100%; }
+.cur-body { flex: 1; display: grid; grid-template-rows: 1fr 1fr; height: 100%; padding: 0; margin: 0; border: none; }
+.cur-top, .cur-bottom { display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); padding: 12px; border-radius: 0; }
+.cur-curtain {  position: absolute; inset: 0; background: rgba(255, 235, 59, 1); z-index: 2; pointer-events: none; }
+
+.inverted-mode #starScreen .flip-card,
+.inverted-mode .flip-card,
+.inverted-mode .cur-top,
+.inverted-mode .cur-bottom,
+.inverted-mode .mem-q,
+.inverted-mode .mem-opt {
+  background-color: #222 !important;
+  color: #f5ebe2 !important;
+  border-color: #f5ebe2 !important;
+  transition: all 0.3s ease;
+}
+
+#starScreen .flip-card,
+.flip-card,
+.cur-top,
+.cur-bottom,
+.mem-q,
+.mem-opt {
+  transition: all 0.3s ease;
+}
+
+/* ⚙️ 설정 팝업 기본 숨김 */
+.settings-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface-2, #f5ebe2);
+  border: 3px solid var(--line, #d4af37);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  z-index: 2000;
+  display: none;
+  padding: 20px;
+  width: 260px;
+  text-align: center;
+}
+
+.settings-popup.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+.settings-popup h2 {
+  margin-bottom: 15px;
+}
+
+.settings-popup .btn {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: #222;
+  color: #f5ebe2;
+  transition: background 0.3s;
+}
+
+.settings-popup .btn:hover {
+  background: #444;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
