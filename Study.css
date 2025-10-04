@@ -22,7 +22,7 @@ body{ margin:0; background:var(--bg); color:var(--text); font-family:"Pretendard
 
 /* === Main: bookmark & topic list === */
 .topic-wrap{ position:absolute; left:16px; right:16px; top:72px; bottom:72px; overflow:auto; padding:8px; display:flex; flex-direction:column; gap:10px }
-.placeholder{ border:2px dashed #5a6170; border-radius:12px; height:88px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:14px; user-select:none }
+.placeholder{ border:2px dashed #5a6170; border-radius:12px; height:63px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:14px; user-select:none }
 
 /* === Topic cards === */
 .topic{ position:relative; border:3px solid var(--gold); background:linear-gradient(180deg, var(--scarlet-top) 0%, var(--scarlet-bot) 100%); color:#fff; border-radius:12px; padding:14px 16px; box-shadow:0 6px 12px rgba(0,0,0,.22) }

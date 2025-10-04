@@ -759,8 +759,6 @@ curOpacityBtn.addEventListener('click', () => {
 
 // 자리만: s/a/hint/연필/☆는 후술
 curSearchBtn.addEventListener('click', () => openSearchPrompt('curtain'));
-curHintBtn.addEventListener('click', () => showToast('힌트(후술 예정)', 1200));
-curEditBtn.addEventListener('click', () => showToast('편집(후술 예정)', 1200));
 curStar.addEventListener('click', () => {
   const on = !isStarred(currentTopicId, curtainIndex);
   setStar(currentTopicId, curtainIndex, on);
@@ -1596,41 +1594,56 @@ function turnOffAllRandomForTopic(topicId) {
   });
 }
 
-/* ===== Hint(공유 메모): 텍스트 기준으로 모드 공통 ===== */
+/* ===== Hint(공유 메모): 카드별 힌트 저장 ===== */
+// 카드별 고유 힌트 키 (index 기준)
+function hintKeyForCard(topicId, index) {
+  return `hint:${topicId}:${index}`;
+}
 
-// 텍스트 → 힌트키(로컬스토리지): 공백 정규화 + 소문자 + URL 인코딩
+// ✅ 기존 방식(텍스트 기반)도 병행 지원 — 이전 데이터 호환용
 function hintKeyForText(s) {
   const norm = String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
   return 'hint:' + encodeURIComponent(norm);
 }
-function getHintByText(s) {
-  try { return localStorage.getItem(hintKeyForText(s)) || ''; } catch (_) { return ''; }
-}
-function setHintByText(s, v) {
-  try { localStorage.setItem(hintKeyForText(s), String(v || '')); } catch (_) { }
+
+// 힌트 불러오기 (카드 인덱스 우선, 없으면 텍스트 기반)
+function getHint(topicId, index, text) {
+  try {
+    const byCard = localStorage.getItem(hintKeyForCard(topicId, index));
+    if (byCard !== null) return byCard;
+    const byText = localStorage.getItem(hintKeyForText(text));
+    return byText || '';
+  } catch (_) { return ''; }
 }
 
-// 현재 화면에서 "보이는 텍스트" 추출
+// 힌트 저장 (카드 인덱스 기반)
+function setHint(topicId, index, text, value) {
+  try {
+    localStorage.setItem(hintKeyForCard(topicId, index), String(value || ''));
+  } catch (_) { }
+}
+
+// 현재 화면에서 "보이는 텍스트" 추출 (모드별)
 function getVisibleTextFor(mode) {
   if (mode === 'flip') {
     const el = document.querySelector('#flipScreen .flip-card');
     return el ? el.textContent : '';
   }
   if (mode === 'curtain') {
-    // 휘장(노란 커튼)이 보이면 Top이 현재 확인 대상, 아니면 Bottom
     const cur = document.querySelector('#curtainScreen .cur-bottom .cur-curtain');
     const on = cur && cur.style.display !== 'none';
     const top = document.querySelector('#curtainScreen .cur-top .cur-text');
     const bot = document.querySelector('#curtainScreen .cur-bottom .cur-text');
     return on ? (top?.textContent || '') : (bot?.textContent || '');
   }
-  // memory: 질문 텍스트 기준
   const q = document.querySelector('#memoryScreen .mem-q');
   return q ? q.textContent : '';
 }
 
-/* 팝업 생성(최초 1회) */
-let _hintWrap, _hintEditBtn, _hintCloseBtn, _hintContent, _hintTextarea, _hintCurText = '', _hintMode = null;
+/* ===== Hint Popup (모드 공통) ===== */
+let _hintWrap, _hintEditBtn, _hintCloseBtn, _hintContent, _hintTextarea;
+let _hintCurText = '', _hintMode = null, _hintIndex = null;
+
 function ensureHintPopup() {
   if (_hintWrap) return;
   _hintWrap = document.createElement('div');
@@ -1649,15 +1662,21 @@ function ensureHintPopup() {
   _hintContent = _hintWrap.querySelector('#hintContent');
   _hintTextarea = _hintWrap.querySelector('#hintTextarea');
 
-  // 오버레이 클릭 시 닫기
+  // 배경 클릭 시 닫기
   _hintWrap.addEventListener('click', (e) => { if (e.target === _hintWrap) closeHintPopup(); });
   _hintCloseBtn.addEventListener('click', closeHintPopup);
 
-  // 연필(편집) 토글: 보기 <-> 입력, 입력 중엔 자동 저장(디바운스)
-  let saveTm = null;
-  function saveNow() { setHintByText(_hintCurText, _hintTextarea.value); }
-  function debouncedSave() { clearTimeout(saveTm); saveTm = setTimeout(saveNow, 250); }
+  // 입력 중 자동 저장 (디바운스)
+  let saveTimer = null;
+  function saveNow() {
+    setHint(currentTopicId, _hintIndex, _hintCurText, _hintTextarea.value);
+  }
+  function debouncedSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 300);
+  }
 
+  // ✏️ 편집 토글
   _hintEditBtn.addEventListener('click', () => {
     const editing = _hintTextarea.style.display !== 'none';
     if (!editing) {
@@ -1672,15 +1691,21 @@ function ensureHintPopup() {
       _hintContent.textContent = _hintTextarea.value || '(힌트 없음)';
     }
   });
+
   _hintTextarea.addEventListener('input', debouncedSave);
 }
 
-// 열기/닫기
 function openHintPopupFor(mode) {
   ensureHintPopup();
   _hintMode = mode;
   _hintCurText = getVisibleTextFor(mode) || '';
-  const val = getHintByText(_hintCurText);
+
+  // 현재 인덱스 추출 (모드별 전역 인덱스 변수)
+  if (mode === 'flip') _hintIndex = flipIndex - 1;
+  else if (mode === 'curtain') _hintIndex = curtainIndex - 1;
+  else if (mode === 'memory') _hintIndex = memoryIndex - 1;
+
+  const val = getHint(currentTopicId, _hintIndex, _hintCurText);
 
   _hintContent.textContent = val || '(힌트 없음)';
   _hintTextarea.value = val || '';
@@ -1688,19 +1713,20 @@ function openHintPopupFor(mode) {
   _hintContent.style.display = 'block';
 
   _hintWrap.style.display = 'flex';
-  document.body.classList.add('naming-open'); // 배경 입력 막기(기존 규칙 재사용)
+  document.body.classList.add('naming-open');
 }
+
 function closeHintPopup() {
   if (!_hintWrap) return;
   _hintWrap.style.display = 'none';
   document.body.classList.remove('naming-open');
 }
 
-// 힌트 버튼 전역 연결 (플립/휘장/암기)
+// === 힌트 버튼 연결 (모드별 공통) ===
 document.addEventListener('click', (e) => {
-  const b = e.target && e.target.closest('#flipHint,#curHint,#memHint');
-  if (!b) return;
-  const id = b.id;
+  const btn = e.target && e.target.closest('#flipHint,#curHint,#memHint');
+  if (!btn) return;
+  const id = btn.id;
   const mode = id === 'flipHint' ? 'flip' : id === 'curHint' ? 'curtain' : 'memory';
   openHintPopupFor(mode);
 });
@@ -2141,6 +2167,7 @@ document.addEventListener('keydown', (e) => {
     }
   }
 });
+
 
 // ===== 초기화 =====
 loadState();
