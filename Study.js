@@ -807,6 +807,51 @@ function renderMemoryCard() {
   // 질문 = f (xpopup-i-q)
   memQuestion.textContent = qCard.f || '';
 
+  // === 질문 폰트 조절 버튼 세트 추가 ===
+  let qFontControls = document.getElementById('memQFontControls');
+  if (!qFontControls) {
+    qFontControls = document.createElement('div');
+    qFontControls.id = 'memQFontControls';
+    qFontControls.style.position = 'absolute';
+    qFontControls.style.right = '16px';
+    qFontControls.style.top = '10px';
+    qFontControls.style.display = 'flex';
+    qFontControls.style.flexDirection = 'column';
+    qFontControls.style.gap = '6px';
+
+    const qPlus = document.createElement('button');
+    qPlus.textContent = '➕';
+    qPlus.className = 'chip';
+    const qMinus = document.createElement('button');
+    qMinus.textContent = '➖';
+    qMinus.className = 'chip';
+
+    qFontControls.appendChild(qPlus);
+    qFontControls.appendChild(qMinus);
+    memQuestion.style.position = 'relative';
+    memQuestion.appendChild(qFontControls);
+
+    // 폰트 조절 기능
+    qPlus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const cur = parseFloat(getComputedStyle(memQuestion).fontSize);
+      const next = Math.min((cur || 22) + 2, 96);
+      memQuestion.style.fontSize = `${next}px`;
+      saveFont(currentTopicId, memoryIndex, 'q', next);
+    });
+    qMinus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const cur = parseFloat(getComputedStyle(memQuestion).fontSize);
+      const next = Math.max((cur || 22) - 2, 10);
+      memQuestion.style.fontSize = `${next}px`;
+      saveFont(currentTopicId, memoryIndex, 'q', next);
+    });
+  }
+
+  // 저장된 폰트 크기 복원
+  const qPx = loadFont(currentTopicId, memoryIndex, 'q');
+  if (qPx) memQuestion.style.fontSize = `${qPx}px`;
+
   // ✏️ 수정 버튼 추가 (질문 부분에만)
   addEditButton(memQuestion, qCard, 'f', memoryIndex);
 
@@ -1755,38 +1800,47 @@ document.getElementById("invertButton").addEventListener("click", () => {
   document.body.classList.toggle("inverted-mode");
 });
 
+
 // === 수정 팝업 ===
 let editingIndex = null;
+let editingSide = null;
 
-function openEditPopup(index) {
+// 팝업 열기
+function openEditPopup(index, side) {
   const cards = loadCards(currentTopicId);
+  if (!cards || !cards[index]) return;
+
   editingIndex = index;
+  editingSide = side;
+
   const card = cards[index];
-  const content = card.f || card.t || card.q || '';
+  const content = card[side] || '';
   document.getElementById('editInput').value = content;
   document.getElementById('editPopup').style.display = 'flex';
   document.body.classList.add('naming-open');
 }
 
-document.getElementById('editCancelBtn').onclick = () => {
+// 팝업 닫기
+function closeEditPopup() {
   document.getElementById('editPopup').style.display = 'none';
   document.body.classList.remove('naming-open');
-};
+  editingIndex = null;
+  editingSide = null;
+}
 
+// 취소 버튼
+document.getElementById('editCancelBtn').onclick = closeEditPopup;
+
+// 저장 버튼
 document.getElementById('editSaveBtn').onclick = () => {
   const cards = loadCards(currentTopicId);
-  if (editingIndex == null || !cards[editingIndex]) return;
-  const newText = document.getElementById('editInput').value.trim();
+  if (editingIndex == null || editingSide == null || !cards[editingIndex]) return;
 
-  // f/b/t/u/q 중 존재하는 키를 자동 감지해서 수정
-  const c = cards[editingIndex];
-  for (const k of ['f', 'b', 't', 'u', 'q']) {
-    if (c[k] !== undefined) c[k] = newText;
-  }
+  const newText = document.getElementById('editInput').value.trim();
+  cards[editingIndex][editingSide] = newText;
 
   saveCards(currentTopicId, cards);
-  document.getElementById('editPopup').style.display = 'none';
-  document.body.classList.remove('naming-open');
+  closeEditPopup();
   showToast('수정 완료', 1500);
 
   // 현재 모드 재렌더
@@ -1795,8 +1849,23 @@ document.getElementById('editSaveBtn').onclick = () => {
   if (document.getElementById('memoryScreen').style.display !== 'none') renderMemoryCard();
 };
 
+// ESC / ENTER 키 지원
+document.addEventListener('keydown', (e) => {
+  const popup = document.getElementById('editPopup');
+  if (popup.style.display !== 'none') {
+    if (e.key === 'Escape') closeEditPopup();
+    if (e.key === 'Enter') document.getElementById('editSaveBtn').click();
+  }
+});
+
+// 팝업 바깥 클릭 → 닫기
+document.getElementById('editPopup').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('editPopup')) closeEditPopup();
+});
+
+// 💎 버튼 추가 함수
 function addEditButton(container, card, side, index) {
-  // 이미 버튼이 있다면 중복 방지
+  // 중복 방지
   const existing = container.querySelector('.edit-btn');
   if (existing) return;
 
@@ -1811,17 +1880,15 @@ function addEditButton(container, card, side, index) {
   btn.style.border = 'none';
   btn.style.cursor = 'pointer';
 
-  btn.addEventListener('click', () => {
-    const newText = prompt('이 텍스트를 수정하십시오:', card[side] || '');
-    if (newText === null) return;
-    card[side] = newText;
-    saveCards(currentTopicId, cards); // 로컬 스토리지 반영
-    renderFlipCard(); // 다시 그리기
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openEditPopup(index - 1, side); // index는 1-based이므로 -1
   });
 
   container.style.position = 'relative';
   container.appendChild(btn);
 }
+
 
 // ⚙️ 설정 팝업 토글
 const profileBtn = document.querySelector(".fab");
@@ -2029,6 +2096,51 @@ if (topicWrapEl) {
   });
 
 }
+
+// ===== 키보드 네비게이션 (좌/우/위 화살표) =====
+document.addEventListener('keydown', (e) => {
+  const isVisible = (el) => el && el.style.display !== 'none';
+
+  // ◀ 이전 카드
+  if (e.key === 'ArrowLeft') {
+    if (isVisible(starScreen)) starPrev.click();
+    else if (isVisible(flipScreen)) flipPrev.click();
+    else if (isVisible(curtainScreen)) curPrev.click();
+    else if (isVisible(memoryScreen)) memPrev.click();
+  }
+
+  // ▶ 다음 카드
+  if (e.key === 'ArrowRight') {
+    if (isVisible(starScreen)) starNext.click();
+    else if (isVisible(flipScreen)) flipNext.click();
+    else if (isVisible(curtainScreen)) curNext.click();
+    else if (isVisible(memoryScreen)) memNext.click();
+  }
+
+  // ▲ 특수 토글
+  if (e.key === 'ArrowUp') {
+    if (isVisible(starScreen)) {
+      // 북마크: 카드 앞/뒤 토글
+      starCard.click();
+    }
+    else if (isVisible(flipScreen)) {
+      // 플립: 카드 앞/뒤 토글
+      flipCard.click();
+    }
+    else if (isVisible(curtainScreen)) {
+      // 휘장: 보이기/가리기
+      const isHidden = curCurtain.style.display === 'none';
+      curCurtain.style.display = isHidden ? 'block' : 'none';
+    }
+    else if (isVisible(memoryScreen)) {
+      // 퀴즈: 정답 1회 클릭
+      const firstOpt = memOptions.querySelector('.mem-opt');
+      if (firstOpt && !firstOpt.classList.contains('correct') && !firstOpt.classList.contains('wrong')) {
+        firstOpt.click();
+      }
+    }
+  }
+});
 
 // ===== 초기화 =====
 loadState();

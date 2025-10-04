@@ -339,3 +339,12 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
     transform: translate(-50%, -50%);
   }
 }
+
+
+/* === 수정 팝업 크기 조정 === */
+.namingPopup__input {
+  height: 20vh;  
+  font-size: 18px;
+  line-height: 1.5;
+  resize: vertical;
+}
