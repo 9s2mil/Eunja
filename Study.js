@@ -203,7 +203,7 @@ starFontPlus.addEventListener('click', () => {
   if (!starList.length) return;
   const { t, i } = starList[starPos - 1];
   const cur = parseFloat(getComputedStyle(starCard).fontSize);
-  const next = Math.min((cur || 24) + 2, 96);
+  const next = Math.min((cur || 24) + 4, 96);
   starCard.style.fontSize = `${next}px`;
   saveFont(t, i, starSide, next);
 });
@@ -211,7 +211,7 @@ starFontMinus.addEventListener('click', () => {
   if (!starList.length) return;
   const { t, i } = starList[starPos - 1];
   const cur = parseFloat(getComputedStyle(starCard).fontSize);
-  const next = Math.max((cur || 24) - 2, 10);
+  const next = Math.max((cur || 24) - 4, 10);
   starCard.style.fontSize = `${next}px`;
   saveFont(t, i, starSide, next);
 });
@@ -994,7 +994,7 @@ upBtn.addEventListener('click', () => {
       const L = normalizeField(leftRaw);
       const R = normalizeField(rightRaw);
       // 플립/휘장/암기에서 공용으로 쓰기 위해 모두 저장
-      cards.push({ f: L, b: R, t: L, u: R, q: L, a: R });
+      cards.push({ f: R, b: L, t: R, u: L, q: R, a: L });
     }
 
     if (!cards.length) {
@@ -1592,6 +1592,97 @@ document.addEventListener('click', (e) => {
   const mode = id === 'flipHint' ? 'flip' : id === 'curHint' ? 'curtain' : 'memory';
   openHintPopupFor(mode);
 });
+
+// swipe-nav.js (또는 기존 JS 하단)
+(function () {
+  const THRESHOLD = 40;      // 최소 가로 이동(px)
+  const MAX_OFF_AXIS = 60;   // 세로 허용치(px)
+  const MAX_DURATION = 800;  // 길게 끄는 제스처 무시(ms)
+  const COOLDOWN = 250;      // 연속 트리거 방지(ms)
+
+  function isInteractive(el) {
+    return el.closest('button, a, input, textarea, select, label, [contenteditable], .no-swipe');
+  }
+
+  function attachSwipe(el, onPrev, onNext) {
+    if (!el) return;
+    let startX = 0, startY = 0, t0 = 0, tracking = false, locked = false;
+
+    // 수직 스크롤을 허용하고 수평 제스처만 잡기 위함
+    el.style.touchAction = 'pan-y';
+
+    function onDown(e) {
+      if (locked) return;
+      if (isInteractive(e.target)) return; // 클릭 요소에서 시작하면 패스
+      const p = e.touches ? e.touches[0] : e;
+      startX = p.clientX;
+      startY = p.clientY;
+      t0 = Date.now();
+      tracking = true;
+    }
+
+    function onMove(e) {
+      // 필요 시 진행중 시각효과를 넣을 수 있으나, 기본은 무시
+    }
+
+    function onUp(e) {
+      if (!tracking || locked) return;
+      const p = e.changedTouches ? e.changedTouches[0] : e;
+      const dx = p.clientX - startX;
+      const dy = p.clientY - startY;
+      const dt = Date.now() - t0;
+      tracking = false;
+
+      // 오프축(세로)로 많이 움직였거나, 너무 느리거나, 짧으면 무시
+      if (Math.abs(dy) > MAX_OFF_AXIS) return;
+      if (dt > MAX_DURATION) return;
+      if (Math.abs(dx) < THRESHOLD) return;
+
+      locked = true;
+      if (dx > 0) { onPrev && onPrev(); } else { onNext && onNext(); }
+      setTimeout(() => (locked = false), COOLDOWN);
+    }
+
+    // Pointer Events(권장) — 환경에 따라 터치/마우스도 함께 커버
+    el.addEventListener('pointerdown', onDown, { passive: true });
+    el.addEventListener('pointermove', onMove, { passive: true });
+    el.addEventListener('pointerup', onUp, { passive: true });
+    el.addEventListener('pointercancel', () => (tracking = false), { passive: true });
+
+    // (구형 브라우저 대비) 터치 이벤트 백업 — 필요 없으면 생략 가능
+    el.addEventListener('touchstart', onDown, { passive: true });
+    el.addEventListener('touchmove', onMove, { passive: true });
+    el.addEventListener('touchend', onUp, { passive: true });
+    el.addEventListener('mousedown', onDown);
+    el.addEventListener('mouseup', onUp);
+  }
+
+  // 전역 노출
+  window.attachSwipeNav = attachSwipe;
+})();
+
+// 스와이프
+attachSwipeNav(flipCard, () => flipPrev.click(), () => flipNext.click());
+attachSwipeNav(memoryScreen, () => memPrev.click(), () => memNext.click());
+attachSwipeNav(
+  document.getElementById('starCard'),     // 카드 영역
+  () => starPrev && starPrev.click(),      // 이전
+  () => starNext && starNext.click()       // 다음
+);
+
+// === 휘장: Top 영역에서만 스와이프 ===
+attachSwipeNav(
+  document.getElementById('curTopArea'),
+  () => curPrev && curPrev.click(),
+  () => curNext && curNext.click()
+);
+
+// === 휘장: Under(아래) 영역에서도 스와이프 ===
+attachSwipeNav(
+  document.getElementById('curBottomArea'),
+  () => curPrev && curPrev.click(),
+  () => curNext && curNext.click()
+);
 
 // ===== 초기화 =====
 loadState();

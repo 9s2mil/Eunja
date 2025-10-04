@@ -127,10 +127,10 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 .mem-stats{ display:flex; align-items:center; gap:8px; padding:8px 12px 0; font-size:14px }
 .mem-stats .spacer{ flex:1 }
 .mem-wrap{ flex:1; min-height:0; padding:10px 12px 80px; display:flex; flex-direction:column; gap:12px }
-.mem-q{ border:1px solid var(--line); background:var(--surface-2); border-radius:10px; padding:12px; font-size:18px; text-align:center }
+.mem-q{ border:1px solid var(--line); background:var(--surface-2); border-radius:10px; padding:12px; text-align:center }
 .mem-options{ display:flex; flex-direction:column; gap:12px }
 .mem-opt{ position:relative; display:flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--surface-2); border-radius:10px; padding:10px 12px }
-.mem-opt__text{ flex:1; font-size:18px; text-align:center; word-break:keep-all }
+.mem-opt__text{ flex:1; text-align:center; word-break:keep-all }
 .mem-opt__control{ display:flex; flex-direction:column; gap:6px }
 .mem-opt__btn{ border:1px solid var(--line); background:var(--surface); padding:6px 10px; border-radius:8px }
 .mem-opt.correct{ outline:2px solid #2ecc71 }
@@ -214,6 +214,9 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
   text-shadow:0 0 10px rgba(226,190,58,.35);
 }
 
+.swipe-zone img { /*user-drag: none;*/ -webkit-user-drag: none; }
+.swipe-zone { touch-action: pan-y; }
+
 /* 힌트 팝업 */
 .hintPopup{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.35); backdrop-filter:blur(2px); z-index:1200 }
 .hintPopup__panel{ position:relative; width:min(92vw,420px); background:#3B2E2E; color:#F7F2EE; border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:18px; box-shadow:0 18px 40px rgba(0,0,0,.15) }
@@ -240,3 +243,5 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 #starScreen .flip-card,
 #starScreen .cur-text,
 #starScreen .mem-q { font-size: var(--content-font) }
+
+#memoryScreen .mem-opt__text, #starScreen .mem-opt__text { font-size: 1.4em; }
