@@ -1104,7 +1104,7 @@ upBtn.addEventListener('click', () => {
       const L = normalizeField(leftRaw);
       const R = normalizeField(rightRaw);
       // 플립/휘장/암기에서 공용으로 쓰기 위해 모두 저장
-      cards.push({ f: R, b: L, t: R, u: L, q: R, a: L });
+      cards.push({ f: L, b: R, t: L, u: R, q: L, a: R });
     }
 
     if (!cards.length) {
@@ -1191,7 +1191,7 @@ function searchCards(topicId, mode, qRaw) {
 // HTML 안전 이스케이프
 function escHTML(s) { return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
 
-// 공백 무시 부분검색 정규식 빌더 (예: "가 마여" → /가\s*마\s*여/gi)
+// 공백 무시 부분검색 정규식 빌더 
 function buildLooseRe(q) {
   const raw = String(q || '').replace(/\s+/g, '');                          // 공백 제거
   const esc = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');                 // 정규식 이스케이프
@@ -1460,7 +1460,7 @@ function openAutoPrompt(mode) {
     _autoPopup.innerHTML = `
       <div class="namingPopup__panel" role="dialog" aria-label="오토 설정">
         <div class="namingPopup__title">오토 시간(초)</div>
-        <input class="namingPopup__input" id="qysmAutoSecs" inputmode="numeric" pattern="[0-9]*" placeholder="예: 3" />
+        <input class="namingPopup__input" id="qysmAutoSecs" inputmode="numeric" pattern="[0-9]*" placeholder="초단위의 정수를 입력하세요" />
         <div class="namingPopup__actions">
           <button class="btn" id="qysmAutoCancel">취소</button>
           <button class="btn btn-primary" id="qysmAutoOk">확인</button>
@@ -2028,18 +2028,18 @@ function makeBackupTextForTopic(topicId) {
   cards.forEach((c) => {
     // 업로드/내부 구조에 따라 플립(front/back)의 키명을 확인.
     // 기존 프로젝트에서 'f'가 front(앞면), 'b'가 back(뒷면)이라 가정함.
-    // 사용자 요청대로 "백(b)"을 앞쪽에, "프론트(f)"를 뒤쪽에 둔다.
-    const backRaw = c.b != null ? c.b : (c.back != null ? c.back : '');
+    // 사용자 요청대로 "프론트(f)"를 앞쪽에, "백(b)"을 뒤쪽에 둔다.
     const frontRaw = c.f != null ? c.f : (c.front != null ? c.front : '');
+    const backRaw = c.b != null ? c.b : (c.back != null ? c.back : '');
 
-    const back = normalizeFieldText(backRaw);
     const front = normalizeFieldText(frontRaw);
+    const back = normalizeFieldText(backRaw);
 
     // 둘 다 비어있으면 해당 카드는 건너뜀
     if (!back && !front) return;
 
-    // b;f 형식 (둘 중 하나만 있으면 빈칸 대신 빈 문자열)
-    lines.push(`${back};${front}`);
+    // F;B 형식 (둘 중 하나만 있으면 빈칸 대신 빈 문자열)
+    lines.push(`${front};${back}`);
   });
 
   // 각 카드 라인 사이에는 줄바꿈 하나만 넣음

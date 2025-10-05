@@ -92,7 +92,7 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 .flip-header{ display:grid; grid-template-columns:1fr auto auto; gap:8px; padding:12px 12px 0; align-items:center; }
 .flip-topic{ border:1px solid var(--line); background:var(--surface-2); padding:8px 10px; border-radius:8px; font-size:14px }
 .flip-meta{ display:flex; align-items:center; gap:6px }
-.chip{ display:inline-flex; align-items:center; justify-content:center; height:40px; padding:0 12px; min-width:40px; border-radius:12px; border:2px solid var(--gold); background-color: rgba(0, 0, 0, 0); color:#fff; font-size:16px; font-weight:800; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.35); box-shadow:0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15); transition:transform .08s ease, box-shadow .08s ease, filter .08s ease }
+.chip{ display:inline-flex; align-items:center; justify-content:center; height:40px; padding:0 12px; min-width:40px; border-radius:12px; border:2px solid var(--gold); background-color: rgba(0, 0, 0, 0); color:#8d6d06; font-size:16px; font-weight:800; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.35); box-shadow:0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15); transition:transform .08s ease, box-shadow .08s ease, filter .08s ease }
 .chip:hover{ filter:saturate(1.06) }
 .chip:active{ transform:translateY(2px); box-shadow:0 6px 12px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.1) }
 .chip:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(226,190,58,.28), 0 8px 14px rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.15) }
