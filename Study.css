@@ -121,16 +121,12 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
 .cur-fontcol-top { top:6px; right: 6px;}
 .cur-fontcol-bottom{ top:auto; left: 6px; bottom:6px }
 .cur-curtain { position: absolute; inset: 0; z-index: 2; pointer-events: none;
-
-  /* ▼ 네 .gid 디자인 반영 */
   background: linear-gradient(to top, #8B0000, #B22222, #3e1f28) !important;
   border: 5px solid #d4af37 !important;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5) !important;
   box-sizing: border-box;
-  border-radius: 0;                  /* 휘장 전체 덮이도록 둥근 모서리 제거 */
+  border-radius: 0;
   transition: opacity 0.3s ease, background 0.3s ease;
-
-  /* 투명화 상태 대비 (기존 투명 모드 대응용) */
   opacity: 1;
 }
 .cur-curtain.transparent { background: linear-gradient(to top, rgba(139,0,0,0), rgba(178,34,34,0), rgba(62,31,40,0)); opacity: 0; }
@@ -347,4 +343,188 @@ body.naming-open .namingPopup,body.naming-open .namingPopup *{ pointer-events:au
   font-size: 18px;
   line-height: 1.5;
   resize: vertical;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1100;
+  width: 480px;
+  max-width: 92%;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  padding: 18px;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-inner {
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.modal h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.125rem;
+}
+
+.modal .muted {
+  color: #666;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f6f6f6;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #ff6b6b;
+  color: white;
+  border-color: #e55;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+}
+
+.modal-backdrop.hidden {
+  display: none;
+}
+
+
+/* 순서 리스트 */
+.order-list {
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-list .draggable-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  background: #fff;
+  cursor: grab;
+}
+
+.order-list .draggable-item:active {
+  cursor: grabbing;
+}
+
+.order-list .drag-handle {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+}
+
+.order-list .item-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.order-list .drag-over {
+  border: 2px dashed #ff6b6b;
+}
+
+
+/* 모바일 터치시 영역 키우기 */
+@media (max-width:600px) {
+  .modal {
+    width: 92%;
+  }
+
+  .order-list .draggable-item {
+    padding: 12px;
+  }
+}
+
+/* === Curtain: 평범한 문장 흐름 + 중앙 정렬 === */
+#curTopText,
+#curBottomText {
+  /* 레이아웃/정렬 강제 해제 */
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  display: block !important;
+
+  /* 자연 흐름 */
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+
+  /* 문단 스타일 */
+  padding: 0 4vw !important;
+  /* 좌우 여백 */
+  text-align: center !important;
+  /* 가운데 정렬 (원하면 left로 변경) */
+  white-space: pre-line !important;
+  /* 업로드의 @ → 실제 줄바꿈만 유지 */
+  line-height: normal !important;
+  /* 비정상 라인높이 무력화 */
+  word-break: normal !important;
+  /* 한글 흐름 유지 */
+  overflow: visible !important;
+  /* 잘림 방지 */
+
+  /* 상위 flex/grid 영향 차단 */
+  align-self: auto !important;
+  justify-self: auto !important;
+}
+
+/* 자식에도 가운데 정렬 상속(상위 규칙이 left를 강제할 때 대비) */
+#curTopText *,
+#curBottomText * {
+  text-align: inherit !important;
+  float: none !important;
+}
+
+/* === 루비: 인라인 텍스트처럼 자연 래핑 === */
+#curTopText ruby,
+#curBottomText ruby {
+  ruby-position: over;
+  /* 위에 표시 */
+  white-space: normal !important;
+  /* 줄바꿈 허용 (nowrap 금지) */
+}
+
+/* 루비 크기/라인: 비율 고정(버튼 연동) — 전역 한 번만 선언 */
+ruby rt {
+  font-size: 0.55em;
+  /* 필요 시 0.50~0.65em 조정 */
+  line-height: 1;
 }

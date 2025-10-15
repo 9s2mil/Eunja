@@ -167,7 +167,7 @@ function starOpen(startAtPos = 1) {
 }
 
 function renderStarCard() {
-  if (!starList.length) { starCard.textContent = ''; starIndexLabel.textContent = '0'; return; }
+  if (!starList.length) { starCard.innerHTML = ''; starIndexLabel.textContent = '0'; return; }
   const { t, i } = starList[starPos - 1];
   const cards = loadCards(t);
   const c = cards[i - 1] || { f: '', b: '' };
@@ -181,7 +181,7 @@ function renderStarCard() {
   const px = loadFont(t, i, starSide);
   starCard.style.fontSize = px ? `${px}px` : '';
 
-  starCard.textContent = text || '';
+  starCard.innerHTML = text || '';
 
   // 별 버튼 상태
   const on = isStarred(t, i);
@@ -507,7 +507,7 @@ function renderFlipCard() {
   if (!card) { flipCard.textContent = ''; return; }
 
   const text = (flipSide === 'b') ? card.b : card.f;
-  flipCard.textContent = text || '';
+  flipCard.innerHTML = text || '';
 
   // 폰트 사이즈 복원
   const saved = loadFont(currentTopicId, flipIndex, flipSide);  // (B)의 함수
@@ -648,8 +648,8 @@ function renderCurtainCard() {
   const cards = loadCards(currentTopicId);
   const c = cards[curtainIndex - 1] || { f: '', b: '' };
   // 매핑: t → f(앞), b → b(뒤)
-  curTopText.textContent = c.f || '';
-  curBottomText.textContent = c.b || '';
+  curTopText.innerHTML = c.f || '';
+  curBottomText.innerHTML = c.b || '';
 
   // 폰트 복원
   const topPx = loadFont(currentTopicId, curtainIndex, 't');
@@ -803,7 +803,7 @@ function renderMemoryCard() {
   const qCard = cards[memoryIndex - 1] || { f: '', b: '' };
 
   // 질문 = f (xpopup-i-q)
-  memQuestion.textContent = qCard.f || '';
+  memQuestion.innerHTML = qCard.f || '';
 
   // === 질문 폰트 조절 버튼 세트 추가 ===
   let qFontControls = document.getElementById('memQFontControls');
@@ -868,16 +868,20 @@ function renderMemoryCard() {
     [optionIdxs[i], optionIdxs[j]] = [optionIdxs[j], optionIdxs[i]];
   }
 
-  // DOM 구성
+  // 보기 영역 초기화
   memOptions.innerHTML = '';
+
+  // 보기 구성
   optionIdxs.forEach((idx) => {
     const opt = document.createElement('div');
     opt.className = 'mem-opt';
     opt.dataset.idx = String(idx);
 
+    // 보기 텍스트
     const text = document.createElement('div');
     text.className = 'mem-opt__text';
-    text.textContent = cards[idx - 1]?.b || '';
+    // ✅ 루비 태그가 HTML로 렌더링되도록 변경
+    text.innerHTML = cards[idx - 1]?.b || '';
 
     // 저장된 폰트 크기 복원
     const savedPx = loadFont(currentTopicId, idx, 'a');
@@ -886,7 +890,7 @@ function renderMemoryCard() {
     // ✏️ 각 보기에도 수정 버튼 부여 (선택 사항)
     addEditButton(text, cards[idx - 1], 'b', idx);
 
-    // 우측 폰트 +/- 버튼
+    // 폰트 크기 조절 버튼 영역
     const col = document.createElement('div');
     col.className = 'mem-opt__control';
     const plus = document.createElement('button');
@@ -896,6 +900,7 @@ function renderMemoryCard() {
     minus.className = 'mem-opt__btn';
     minus.textContent = '-';
 
+    // + 버튼 이벤트
     plus.addEventListener('click', (e) => {
       e.stopPropagation();
       const cur = parseFloat(getComputedStyle(text).fontSize);
@@ -903,6 +908,8 @@ function renderMemoryCard() {
       text.style.fontSize = `${next}px`;
       saveFont(currentTopicId, idx, 'a', next);
     });
+
+    // - 버튼 이벤트
     minus.addEventListener('click', (e) => {
       e.stopPropagation();
       const cur = parseFloat(getComputedStyle(text).fontSize);
@@ -928,10 +935,12 @@ function renderMemoryCard() {
       }
     });
 
+    // 요소 배치
     opt.appendChild(text);
     opt.appendChild(col);
     memOptions.appendChild(opt);
   });
+
 
   updateMemoryStarButton();
 }
@@ -1094,17 +1103,51 @@ upBtn.addEventListener('click', () => {
 
     // 2) @ → \n 로 바꾸는 정규화 함수
     const normalizeField = (s = '') =>
-      s.split('@').map(p => p.trim()).filter(Boolean).join('\n');
+      s.split('@')         
+        .map(p => p.trim()) 
+        .join('\n');  
+
+    // === 루비 간이 표기 변환기 ===
+    function convertRubySyntax(text) {
+      if (!text) return text;
+
+      // 1) {본문|루비내용} 패턴 ({base|ruby1^ruby2})
+      text = text.replace(/\{([^|{}]+)\|([^{}]+)\}/g, (m, base, rubySpec) => {
+        const rubies = rubySpec.split('^').filter(Boolean)
+          .map(r => `<rt>${r}</rt>`).join('');
+        return `<ruby>${base}${rubies}</ruby>`;
+      });
+
+      // 2) 단독 ^ 표기 (주^술)
+      text = text.replace(/([\uAC00-\uD7A3\w]+(\^[\uAC00-\uD7A3\w]+)+)/g, (match) => {
+        const parts = match.split('^').filter(Boolean);
+        if (parts.length < 2) return match;
+        const base = parts[0];
+        const rubies = parts.slice(1).map(rt => `<rt>${rt}</rt>`).join('');
+        return `<ruby>${base}${rubies}</ruby>`;
+      });
+
+      // 3) 괄호 → <small> 변환
+      text = text.replace(/\(([^()]+)\)/g, '<small>$1</small>');
+      
+      return text;
+    }
 
     // 3) 줄 파싱 (세미콜론은 첫 1회만 분리)
     const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
     const cards = [];
     for (const line of lines) {
       const [leftRaw = '', rightRaw = ''] = line.split(';', 2);
+      // 필드 정규화
       const L = normalizeField(leftRaw);
       const R = normalizeField(rightRaw);
-      // 플립/휘장/암기에서 공용으로 쓰기 위해 모두 저장
-      cards.push({ f: L, b: R, t: L, u: R, q: L, a: R });
+
+      // 루비 자동 변환
+      const L2 = convertRubySyntax(L);
+      const R2 = convertRubySyntax(R);
+
+      cards.push({ f: L2, b: R2 });
+
     }
 
     if (!cards.length) {
@@ -2168,7 +2211,134 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+(function () {
+  function escapeHtml(s) { return (s + '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+
+  // HTML5 drag-and-drop 간단 구현
+  let dragSrcEl = null;
+  function addDragHandlers(el) {
+    el.addEventListener('dragstart', ev => {
+      dragSrcEl = el;
+      ev.dataTransfer.effectAllowed = 'move';
+      try { ev.dataTransfer.setData('text/plain', el.dataset.id); } catch (e) { }
+      el.classList.add('dragging');
+    });
+
+
+    el.addEventListener('dragover', ev => {
+      ev.preventDefault(); // 필수
+      ev.dataTransfer.dropEffect = 'move';
+      const target = ev.currentTarget;
+      if (target && target !== dragSrcEl) target.classList.add('drag-over');
+    });
+
+
+    el.addEventListener('dragleave', ev => {
+      ev.currentTarget.classList.remove('drag-over');
+    });
+
+
+    el.addEventListener('drop', ev => {
+      ev.stopPropagation();
+      const target = ev.currentTarget;
+      if (dragSrcEl && target !== dragSrcEl) {
+        // 순서 바꾸기
+        const children = Array.from(orderList.children);
+        const srcIndex = children.indexOf(dragSrcEl);
+        const tgtIndex = children.indexOf(target);
+        if (srcIndex > -1 && tgtIndex > -1) {
+          if (srcIndex < tgtIndex) {
+            orderList.insertBefore(dragSrcEl, target.nextSibling);
+          } else {
+            orderList.insertBefore(dragSrcEl, target);
+          }
+        }
+      }
+      orderList.querySelectorAll('.drag-over').forEach(n => n.classList.remove('drag-over'));
+    });
+
+
+    el.addEventListener('dragend', ev => {
+      el.classList.remove('dragging');
+      orderList.querySelectorAll('.drag-over').forEach(n => n.classList.remove('drag-over'));
+    });
+
+
+    // 터치 대응: 간단한 터치 드래그 (모바일에서의 대체 경험 제공)
+    let touchStartY = 0;
+    el.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; el.classList.add('dragging'); }, { passive: true });
+    el.addEventListener('touchmove', e => { e.preventDefault(); }, { passive: false });
+    el.addEventListener('touchend', e => { el.classList.remove('dragging'); });
+  }
+
+
+  // 저장: 현재 리스트 순서의 data-id 배열을 localStorage에 기록
+  function saveOrder() {
+    const ids = Array.from(orderList.children).map(li => li.dataset.id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    applySavedOrderToDOM(ids);
+  }
+
+
+  // 저장된 순서를 실제 화면의 토픽 버튼 DOM에 적용
+  function applySavedOrderToDOM(savedIds) {
+    // 원래 토픽 버튼 컨테이너 찾기
+    const topicNodes = buildTopicList();
+    const idToNode = new Map(topicNodes.map(t => [t.id, t.node]));
+
+
+    // 가능한 토픽 컨테이너 (공통되는 부모) 찾기
+    // 모든 노드의 공통 부모를 추정하거나, 가장 먼저 찾은 노드의 parentNode 사용
+    if (topicNodes.length === 0) return;
+    const parent = topicNodes[0].node.parentNode;
+    if (!parent) return;
+
+
+    // 새로운 순서대로 해당 노드들을 parent에 재배치 (존재하는 것만)
+    savedIds.forEach(id => {
+      const node = idToNode.get(id);
+      if (node && parent.contains(node)) {
+        parent.appendChild(node); // append하면 기존 위치에서 이동
+      }
+    });
+
+
+    // 남은(저장에 없던) 항목들은 그대로 유지되게 둔다
+  }
+
+
+  // 모달 열기/닫기
+  function openOrderModal() { renderOrderList(); orderModal.classList.remove('hidden'); orderBackdrop.classList.remove('hidden'); }
+  function closeOrderModal() { orderModal.classList.add('hidden'); orderBackdrop.classList.add('hidden'); }
+
+
+  // 이벤트 바인딩
+  function bindUI() {
+    if (openOrderBtn) openOrderBtn.addEventListener('click', openOrderModal);
+    if (orderBackdrop) orderBackdrop.addEventListener('click', closeOrderModal);
+    if (cancelOrderBtn) cancelOrderBtn.addEventListener('click', closeOrderModal);
+    if (saveOrderBtn) saveOrderBtn.addEventListener('click', () => { saveOrder(); closeOrderModal(); });
+
+
+    // 페이지 로드시 저장된 순서가 있으면 처음에 적용
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (Array.isArray(saved) && saved.length) applySavedOrderToDOM(saved);
+      }
+    } catch (e) { console.warn('초기 순서 적용 실패', e); }
+  }
+
+
+  // init
+  document.addEventListener('DOMContentLoaded', () => {
+    bindUI();
+  });
+
+
+})();
 // ===== 초기화 =====
 loadState();
 render();
