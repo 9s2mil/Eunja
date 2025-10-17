@@ -528,3 +528,9 @@ ruby rt {
   /* 필요 시 0.50~0.65em 조정 */
   line-height: 1;
 }
+
+small {
+  font-size: 0.45em;
+  opacity: 0.8;
+  color: rgb(255, 213, 184);
+}
